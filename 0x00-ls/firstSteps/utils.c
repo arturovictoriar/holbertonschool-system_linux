@@ -15,6 +15,34 @@ int count_characters(char *directory_to_show_ls)
 }
 
 /**
+  * add_bar_diagonal_end - concatenate a string with /
+  * @str1: pointer with a string
+  * Return: ponter with the two string concatenate
+  */
+char *add_bar_diagonal_end(char *str1)
+{
+	char *with_bar_diagonal = NULL;
+	int str1_length = 0;
+	int index = 0;
+
+	str1_length = count_characters(str1);
+	with_bar_diagonal = malloc((sizeof(char) * str1_length) + 2);
+	if (!with_bar_diagonal)
+		return (NULL);
+
+	for (index = 0; index <= str1_length + 1; index++)
+	{
+		if (index == 0)
+			with_bar_diagonal[index] = '/';
+		else if (index <= str1_length)
+			with_bar_diagonal[index] = str1[index - 1];
+		else
+			with_bar_diagonal[index] = '\0';
+	}
+	return (with_bar_diagonal);
+}
+
+/**
   * concat_two_strings - concatenate 2 strings
   * @str1: pointer with a string
   * @str2: pointer with a string

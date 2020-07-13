@@ -13,7 +13,7 @@ int error_alert(char *directory_to_show_ls)
 	error_message = concat_two_strings(directory_to_show_ls, error_ls_message);
 
 	if (!error_message)
-		return (1);
+		return (errno);
 
 	perror(error_message);
 

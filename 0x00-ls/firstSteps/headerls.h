@@ -10,10 +10,11 @@
 #include <unistd.h>
 
 int count_characters(char *directory_to_show_ls);
+char *add_bar_diagonal_end(char *str1);
 char *concat_two_strings(char *str1, char *str2);
 void free_memory_messages(char *chain_str);
+int extra_info_ls(char *directory_to_show_ls, struct stat *buffer);
 int ls_method(int argc, char **argv);
 int error_alert(char *directory_to_show_ls);
-void extra_info_ls(char *directory_to_show_ls);
 
 #endif

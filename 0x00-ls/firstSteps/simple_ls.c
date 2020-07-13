@@ -2,6 +2,36 @@
 #include "headerls.h"
 
 /**
+  * ls_basic - list the directory o file given in argv without options
+  * @read: has the length of the arguments
+  * Return: nothing
+  */
+void ls_basic(struct dirent *read)
+{
+	printf("%s\n", read->d_name);
+}
+
+/**
+  * ls_options - list the directory o file given in argv with options
+  * @read: string with the name of the file listed
+  * @directory_to_show_ls: string with the name of the directory list
+  * Return: nothing
+  */
+void ls_options(struct dirent *read, char *directory_to_show_ls)
+{
+	struct stat buffer = {0};
+	char *file_or_directory = NULL;
+	char *d_name_d = NULL;
+
+	d_name_d = add_bar_diagonal_end(read->d_name);
+	file_or_directory = concat_two_strings(d_name_d, directory_to_show_ls);
+	free_memory_messages(d_name_d);
+	extra_info_ls(file_or_directory, &buffer);
+	printf("%s, %ld\n", read->d_name, (long) buffer.st_size);
+	free_memory_messages(file_or_directory);
+}
+
+/**
   * ls_method - list the directory o file given in argv
   * @argc: has the length of the arguments
   * @argv: has the arguments
@@ -20,10 +50,15 @@ int ls_method(int argc, char **argv)
 		while ((read = readdir(dir)) != NULL)
 		{
 			if (argc == 2)
-				printf("%s\n", read->d_name);
+			{
+				ls_basic(read);
+			}
+			else if (argc == 3)
+			{
+				ls_options(read, argv[1]);
+			}
 		}
 		closedir(dir);
-		return (0);
 	}
 	return (errno);
 }

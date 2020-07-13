@@ -2,24 +2,23 @@
 
 /**
   * extra_info_ls - get the state of a file or directory
-  * @directory_to_show_ls: has the file or directory name
+  * @file_directory_to_show_state: has the file or directory name
+  * @buffer: structure with the info state
   * Return: a structure with the state of a file o directory
   */
-void extra_info_ls(char *directory_to_show_ls)
+int extra_info_ls(char *file_directory_to_show_state, struct stat *buffer)
 {
-	struct stat buffer;
 	int status = 0;
 
-	if (directory_to_show_ls == NULL)
+	if (file_directory_to_show_state == NULL)
 	{
 		printf("Choose a file or directory to get the state\n");
-		return;
+		return (1);
 	}
 
-	status = lstat(directory_to_show_ls, &buffer);
+	status = lstat(file_directory_to_show_state, buffer);
 	if (status == -1)
-	{
 		perror("Error");
-		return;
-	}
+
+	return (errno);
 }
