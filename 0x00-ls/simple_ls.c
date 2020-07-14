@@ -22,18 +22,31 @@ void ls_options(struct dirent *read, char *directory_to_show_ls)
 	struct stat buffer = {0};
 	char *file_or_directory = NULL;
 	char *d_name_d = NULL;
-	long size_f_or_d = 0;
 	char *ugo_permision = NULL;
 	char *time = NULL;
 	char *user_id = NULL;
 	char *group_id = NULL;
+	long size_f_or_d = 0;
 
 	d_name_d = add_bar_diagonal_end(read->d_name);
+	if (!d_name_d)
+		error_malloc();
+
 	file_or_directory = concat_two_strings(d_name_d, directory_to_show_ls);
+	if (!file_or_directory)
+		error_malloc();
+
 	free_memory_messages(d_name_d);
 	extra_info_ls(file_or_directory, &buffer);
+
 	ugo_permision = get_ugo_permisions(&buffer);
+	if (!ugo_permision)
+		error_malloc();
+
 	time = get_time_file_directory(&buffer);
+	if (!time)
+		error_malloc();
+
 	size_f_or_d = get_size_file_directory(&buffer);
 	user_id = get_user_id_file_directory(&buffer);
 	group_id = get_group_id_file_directory(&buffer);
@@ -71,6 +84,8 @@ int ls_method(int argc, char **argv)
 				ls_options(read, argv[1]);
 			}
 		}
+		if (errno)
+			return (errno);
 		closedir(dir);
 	}
 	return (errno);

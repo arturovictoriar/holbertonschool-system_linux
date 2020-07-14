@@ -26,6 +26,7 @@ char *get_time_file_directory(struct stat *buffer);
 char *get_user_id_file_directory(struct stat *buffer);
 char *get_group_id_file_directory(struct stat *buffer);
 char *get_ugo_permisions(struct stat *buffer);
+void error_malloc(void);
 int ls_method(int argc, char **argv);
 int error_alert(char *directory_to_show_ls);
 
