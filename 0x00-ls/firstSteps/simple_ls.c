@@ -22,12 +22,19 @@ void ls_options(struct dirent *read, char *directory_to_show_ls)
 	struct stat buffer = {0};
 	char *file_or_directory = NULL;
 	char *d_name_d = NULL;
+	long size_f_or_d = 0;
+	char *ugo_permision = NULL;
+	char *time = NULL;
 
 	d_name_d = add_bar_diagonal_end(read->d_name);
 	file_or_directory = concat_two_strings(d_name_d, directory_to_show_ls);
 	free_memory_messages(d_name_d);
 	extra_info_ls(file_or_directory, &buffer);
-	printf("%s, %ld\n", read->d_name, (long) buffer.st_size);
+	ugo_permision = get_ugo_permisions(&buffer);
+	time = get_time_file_directory(&buffer);
+	size_f_or_d = get_size_file_directory(&buffer);
+	printf("%s %ld %s %s\n", ugo_permision, size_f_or_d, time, read->d_name);
+	free_memory_messages(ugo_permision);
 	free_memory_messages(file_or_directory);
 }
 
