@@ -6,9 +6,10 @@
   * @read: has the length of the arguments
   * Return: nothing
   */
-void ls_basic(struct dirent *read)
+int ls_basic(struct dirent *read)
 {
 	printf("%s\n", read->d_name);
+	return (errno);
 }
 
 /**
@@ -17,7 +18,7 @@ void ls_basic(struct dirent *read)
   * @directory_to_show_ls: string with the name of the directory list
   * Return: nothing
   */
-void ls_options(struct dirent *read, char *directory_to_show_ls)
+int ls_options(struct dirent *read, char *directory_to_show_ls)
 {
 	struct stat buffer = {0};
 	char *file_or_directory = NULL;
@@ -37,7 +38,8 @@ void ls_options(struct dirent *read, char *directory_to_show_ls)
 		error_malloc();
 
 	free_memory_messages(d_name_d);
-	extra_info_ls(file_or_directory, &buffer);
+	if (extra_info_ls(file_or_directory, &buffer))
+		return (errno);
 
 	ugo_permision = get_ugo_permisions(&buffer);
 	if (!ugo_permision)
@@ -55,6 +57,7 @@ void ls_options(struct dirent *read, char *directory_to_show_ls)
 	free_memory_messages(time);
 	free_memory_messages(ugo_permision);
 	free_memory_messages(file_or_directory);
+	return (errno);
 }
 
 /**
@@ -77,11 +80,13 @@ int ls_method(int argc, char **argv)
 		{
 			if (argc == 2)
 			{
-				ls_basic(read);
+				if (ls_basic(read))
+					break;
 			}
 			else if (argc == 3)
 			{
-				ls_options(read, argv[1]);
+				if (ls_options(read, argv[1]))
+					break;
 			}
 		}
 		if (errno)
