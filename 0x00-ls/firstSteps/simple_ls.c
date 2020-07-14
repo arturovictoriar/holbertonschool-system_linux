@@ -25,6 +25,8 @@ void ls_options(struct dirent *read, char *directory_to_show_ls)
 	long size_f_or_d = 0;
 	char *ugo_permision = NULL;
 	char *time = NULL;
+	char *user_id = NULL;
+	char *group_id = NULL;
 
 	d_name_d = add_bar_diagonal_end(read->d_name);
 	file_or_directory = concat_two_strings(d_name_d, directory_to_show_ls);
@@ -33,7 +35,11 @@ void ls_options(struct dirent *read, char *directory_to_show_ls)
 	ugo_permision = get_ugo_permisions(&buffer);
 	time = get_time_file_directory(&buffer);
 	size_f_or_d = get_size_file_directory(&buffer);
-	printf("%s %ld %s %s\n", ugo_permision, size_f_or_d, time, read->d_name);
+	user_id = get_user_id_file_directory(&buffer);
+	group_id = get_group_id_file_directory(&buffer);
+	printf("%s %s %s %ld %s %s\n",
+		ugo_permision, user_id, group_id, size_f_or_d, time, read->d_name);
+	free_memory_messages(time);
 	free_memory_messages(ugo_permision);
 	free_memory_messages(file_or_directory);
 }

@@ -40,10 +40,11 @@ char *get_ugo_permisions(struct stat *buffer)
 char *get_time_file_directory(struct stat *buffer)
 {
 	char *time = NULL;
+	char *short_time = NULL;
 
 	time = ctime(&(buffer->st_mtime));
-
-	return (time);
+	short_time = get_short_date(time);
+	return (short_time);
 }
 
 /**

@@ -116,3 +116,26 @@ char *get_rwx_permisions(struct stat *buffer, char *file_directory_permisions)
 
 	return (file_directory_permisions);
 }
+
+/**
+  * get_short_date - get short a full date
+  * @full_date: string with a full date
+  * Return: short date only with the month, day, hour and minutes
+  */
+char *get_short_date(char *full_date)
+{
+	char *short_date = NULL;
+	int index = 0;
+
+	short_date = malloc(sizeof(char) * 13);
+
+	for (index = 0; index <= 12; index++)
+	{
+		if (index < 12)
+			short_date[index] = full_date[index + 4];
+		else
+			short_date[index] = '\0';
+	}
+
+	return (short_date);
+}
