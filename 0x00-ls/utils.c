@@ -49,3 +49,34 @@ char *concat_two_strings(char *str1, char *str2)
 
 	return (full_str);
 }
+
+/**
+  * check_options_ok - check if the tag option exist
+  * @argc: has the length of the arguments
+  * @argv: has the arguments
+  * Return: 1 if the tag exist otherwise 0
+  */
+int (*check_options_ok(int argc, char **argv))()
+{
+	int index = 0;
+	tag_option choose[] = {
+		{"", ls_basic},
+		{"l", ls_options},
+		{NULL, NULL},
+	};
+
+	if (argc > 1)
+	{
+		if (argv[1][0] == '-' && count_characters(argv[1]) != 1)
+		{
+			if (!(argv[1][1] == '-' && count_characters(argv[1]) == 2))
+			{
+				for (index = 1; choose[index].option != NULL; index++)
+					if (argv[1][1] == choose[index].option[0])
+						return (choose[index].function);
+				return (choose[index].function);
+			}
+		}
+	}
+	return (choose[0].function);
+}

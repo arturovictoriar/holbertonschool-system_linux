@@ -58,25 +58,25 @@ char *get_type_file_directory(struct stat *buffer, char *file_dire_permisions)
 	switch (buffer->st_mode & S_IFMT)
 	{
 	case S_IFBLK:
-		file_dire_permisions[0] = '-';
+		file_dire_permisions[0] = 'b';
 		break;
 	case S_IFCHR:
-		file_dire_permisions[0] = '-';
+		file_dire_permisions[0] = 'c';
 		break;
 	case S_IFDIR:
 		file_dire_permisions[0] = 'd';
 		break;
 	case S_IFIFO:
-		file_dire_permisions[0] = '-';
+		file_dire_permisions[0] = 'p';
 		break;
 	case S_IFLNK:
-		file_dire_permisions[0] = '-';
+		file_dire_permisions[0] = 'l';
 		break;
 	case S_IFREG:
 		file_dire_permisions[0] = '-';
 		break;
 	case S_IFSOCK:
-		file_dire_permisions[0] = '-';
+		file_dire_permisions[0] = 's';
 		break;
 	default:
 		file_dire_permisions[0] = '-';
