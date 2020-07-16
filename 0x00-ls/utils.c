@@ -82,18 +82,18 @@ int (*check_options_ok(int argc, char **argv))()
 }
 
 /**
-  * get_d_f_name - concatenate 2 strings
+  * g_name - concatenate 2 strings
   * @argc: has the length of the arguments
   * @argv: has the arguments
-  * @func: function pointer with the right function to use
+  * @f: function pointer with the right function to use
   * Return: ponter with the two string concatenate
   */
-char *get_d_f_name(int (*func)(struct dirent *, char *), int argc, char **argv)
+char *g_name(int (*f)(struct dirent *, char *, char**), int argc, char **argv)
 {
 	char *directory_to_show_ls = NULL;
 	char *home = ".";
 
-	if (func == ls_basic)
+	if (f == ls_basic)
 	{
 		if (argc == 1)
 			directory_to_show_ls = home;

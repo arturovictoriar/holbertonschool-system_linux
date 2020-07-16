@@ -5,28 +5,30 @@
   * ls_basic - list the directory o file given in argv without options
   * @read: has the length of the arguments
   * @directory_to_show_ls: string with the name of the directory list
+  * @ls_c_mes: ls complete message
   * Return: nothing
   */
-int ls_basic(struct dirent *read, char *directory_to_show_ls)
+int ls_basic(struct dirent *read, char *directory_to_show_ls, char **ls_c_mes)
 {
 	(void) directory_to_show_ls;
 
-	printf("%s\n", read->d_name);
-	return (errno);
+	return (ls_message_generator(read->d_name, ls_c_mes));
 }
 
 /**
   * ls_options - list the directory o file given in argv with options
   * @read: string with the name of the file listed
   * @directory_to_show_ls: string with the name of the directory list
+  * @ls_c_me: ls complete message
   * Return: nothing
   */
-int ls_options(struct dirent *read, char *directory_to_show_ls)
+int ls_options(struct dirent *read, char *directory_to_show_ls, char **ls_c_me)
 {
 	struct stat buffer = {0};
 	char *file_or_directory = NULL, *d_name_d = NULL, *ugo_permision = NULL;
 	char *time = NULL, *user_id = NULL, *group_id = NULL;
 	long size_f_or_d = 0;
+	(void) ls_c_me;
 
 	d_name_d = add_bar_diagonal_end(read->d_name);
 	if (!d_name_d)
@@ -60,19 +62,20 @@ int ls_options(struct dirent *read, char *directory_to_show_ls)
 }
 
 /**
-  * ls_method - list the directory o file given in argv
+  * ls_metho - list the directory o file given in argv
   * @argc: has the length of the arguments
   * @argv: has the arguments
-  * @function: function pointer with the right function to use
+  * @f: function pointer with the right function to use
   * Return: 0 to indicate a good working of the program otherwise errno value
   */
-int ls_method(int argc, char **argv, int (*function)(struct dirent *, char *))
+int ls_metho(int argc, char **argv, int (*f)(struct dirent *, char *, char **))
 {
 	DIR *dir = NULL;
 	struct dirent *read = NULL;
 	char *directory_to_show_ls = NULL;
+	char *ls_complete_message = NULL;
 
-	directory_to_show_ls = get_d_f_name(function, argc, argv);
+	directory_to_show_ls = g_name(f, argc, argv);
 	if (!directory_to_show_ls)
 		return (2);
 
@@ -81,10 +84,12 @@ int ls_method(int argc, char **argv, int (*function)(struct dirent *, char *))
 	{
 		while ((read = readdir(dir)) != NULL)
 		{
-			function(read, directory_to_show_ls);
+			f(read, directory_to_show_ls, &ls_complete_message);
 		}
 		if (errno)
 			return (errno);
+		printf("%s\n", ls_complete_message);
+		free_memory_messages(ls_complete_message);
 		closedir(dir);
 	}
 	return (errno);
@@ -102,13 +107,13 @@ int main(int argc, char **argv)
 	char *option_tag_ls = NULL;
 	char home = '.';
 	int end_status = 0;
-	int (*function)(struct dirent *, char *) = NULL;
+	int (*function)(struct dirent *, char *, char **) = NULL;
 
 	function = check_options_ok(argc, argv);
 	if (function)
 	{
 		/* Call ls funciontion*/
-		end_status = ls_method(argc, argv, function);
+		end_status = ls_metho(argc, argv, function);
 		if (!end_status)
 			return (end_status);
 		/* If ls function fails, show a message error and set return value*/
