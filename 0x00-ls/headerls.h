@@ -39,7 +39,7 @@ char *get_user_id_file_directory(struct stat *buffer);
 char *get_group_id_file_directory(struct stat *buffer);
 char *get_ugo_permisions(struct stat *buffer);
 void error_malloc(void);
-char *g_name(int (*f)(struct dirent *, char *, char **), int, char **);
+char *g_name(int f, int, char **, int index);
 int ls_metho(int argc, char **argv, int (*f)(struct dirent *, char *, char**));
 int error_alert(char *directory_to_show_ls);
 int error_option(char *option_tag_ls);
@@ -47,5 +47,9 @@ int ls_basic(struct dirent *read, char *directory_to_show_ls, char **ls_c_ms);
 int ls_options(struct dirent *read, char *directory_to_show_ls, char **ls_c_);
 int (*check_options_ok(int argc, char **argv))();
 int ls_message_generator(char *d_f_name, char **ls_complet_message);
+int choose_value_start(int argc, int (*f)(struct dirent *, char *, char **));
+int add_name_dir(char *d_f_name, char **ls_complet_message);
+int add_list_f_d(char *d_f_name, char **ls_complet_message);
+int mul_name(int argc, int s_num, int i, char **argv, char **ls_c, int f_s_c);
 
 #endif

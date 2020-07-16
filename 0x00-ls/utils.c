@@ -86,18 +86,19 @@ int (*check_options_ok(int argc, char **argv))()
   * @argc: has the length of the arguments
   * @argv: has the arguments
   * @f: function pointer with the right function to use
+  * @index: position in argc of the directory to read
   * Return: ponter with the two string concatenate
   */
-char *g_name(int (*f)(struct dirent *, char *, char**), int argc, char **argv)
+char *g_name(int f, int argc, char **argv, int index)
 {
 	char *directory_to_show_ls = NULL;
 	char *home = ".";
 
-	if (f == ls_basic)
+	if (f)
 	{
 		if (argc == 1)
 			directory_to_show_ls = home;
-		else
+		else if (argc == 2)
 		{
 			if ((count_characters(argv[1]) == 2) &&
 				(argv[1][0] == '-') && (argv[1][1] == '-'))
@@ -105,14 +106,41 @@ char *g_name(int (*f)(struct dirent *, char *, char**), int argc, char **argv)
 			else
 				directory_to_show_ls = argv[1];
 		}
+		else
+			directory_to_show_ls = argv[index];
 	}
 	else
 	{
 		if (argc == 2)
 			directory_to_show_ls = home;
 		else
-			directory_to_show_ls = argv[2];
+			directory_to_show_ls = argv[index];
 	}
 
 	return (directory_to_show_ls);
+}
+
+/**
+  * choose_value_start - choose the rigth name of directory
+  * @argc: has the length of the arguments
+  * @f: function pointer with the right function to use
+  * Return: the rigth name of directory
+  */
+int choose_value_start(int argc, int (*f)(struct dirent *, char *, char **))
+{
+	int start_num = 0;
+
+	if (f == ls_basic)
+	{
+		if (argc > 1)
+			start_num = 1;
+	}
+	else
+	{
+		if (argc > 2)
+			start_num = 2;
+		else
+			start_num = 1;
+	}
+	return (start_num);
 }

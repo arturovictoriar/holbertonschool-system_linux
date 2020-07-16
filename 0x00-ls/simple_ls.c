@@ -12,7 +12,9 @@ int ls_basic(struct dirent *read, char *directory_to_show_ls, char **ls_c_mes)
 {
 	(void) directory_to_show_ls;
 
-	return (ls_message_generator(read->d_name, ls_c_mes));
+	if (read->d_name[0] != '.')
+		return (ls_message_generator(read->d_name, ls_c_mes));
+	return (0);
 }
 
 /**
@@ -72,25 +74,42 @@ int ls_metho(int argc, char **argv, int (*f)(struct dirent *, char *, char **))
 {
 	DIR *dir = NULL;
 	struct dirent *read = NULL;
-	char *directory_to_show_ls = NULL;
-	char *ls_complete_message = NULL;
+	char *directory_to_show_ls = NULL, *ls_complete_message = NULL;
+	char *temp_message = NULL;
+	int f_s_c = 1, index = 0, start_num = 0;
 
-	directory_to_show_ls = g_name(f, argc, argv);
-	if (!directory_to_show_ls)
-		return (2);
+	if (f != ls_basic)
+		f_s_c = 0;
+	start_num = choose_value_start(argc, f);
 
-	dir = opendir(directory_to_show_ls);
-	if (dir)
+	for (index = 0; index < argc - start_num; index++)
 	{
-		while ((read = readdir(dir)) != NULL)
+		temp_message = NULL;
+		directory_to_show_ls = g_name(f_s_c, argc, argv, index + start_num);
+		if (!directory_to_show_ls)
+			return (2);
+		dir = opendir(directory_to_show_ls);
+		if (dir)
 		{
-			f(read, directory_to_show_ls, &ls_complete_message);
+			mul_name(argc, start_num, index, argv, &ls_complete_message, f_s_c);
+			while ((read = readdir(dir)) != NULL)
+			{
+				f(read, directory_to_show_ls, &temp_message);
+			}
+			if (temp_message)
+			{
+				add_list_f_d(temp_message, &ls_complete_message);
+				free_memory_messages(temp_message);
+			}
+			closedir(dir);
 		}
-		if (errno)
-			return (errno);
+		else
+			error_alert(directory_to_show_ls);
+	}
+	if (ls_complete_message)
+	{
 		printf("%s\n", ls_complete_message);
 		free_memory_messages(ls_complete_message);
-		closedir(dir);
 	}
 	return (errno);
 }
@@ -103,12 +122,11 @@ int ls_metho(int argc, char **argv, int (*f)(struct dirent *, char *, char **))
   */
 int main(int argc, char **argv)
 {
-	char *directory_to_show_ls = NULL;
 	char *option_tag_ls = NULL;
-	char home = '.';
 	int end_status = 0;
 	int (*function)(struct dirent *, char *, char **) = NULL;
 
+	/* Check if exist the tag name*/
 	function = check_options_ok(argc, argv);
 	if (function)
 	{
@@ -116,17 +134,6 @@ int main(int argc, char **argv)
 		end_status = ls_metho(argc, argv, function);
 		if (!end_status)
 			return (end_status);
-		/* If ls function fails, show a message error and set return value*/
-		if (argc == 1)
-			directory_to_show_ls = &home;
-		else if (argc == 2)
-			directory_to_show_ls = argv[1];
-		else if (argc == 3)
-			directory_to_show_ls = argv[2];
-		else
-			directory_to_show_ls = &home;
-
-		end_status = error_alert(directory_to_show_ls);
 	}
 	else
 	{
