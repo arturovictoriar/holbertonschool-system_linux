@@ -39,6 +39,7 @@ char *get_user_id_file_directory(struct stat *buffer);
 char *get_group_id_file_directory(struct stat *buffer);
 char *get_ugo_permisions(struct stat *buffer);
 void error_malloc(void);
+char *get_d_f_name(int (*func)(struct dirent *, char *), int, char **);
 int ls_method(int argc, char **argv, int (*function)(struct dirent *, char *));
 int error_alert(char *directory_to_show_ls);
 int error_option(char *option_tag_ls);

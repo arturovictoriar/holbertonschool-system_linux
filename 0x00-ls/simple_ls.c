@@ -71,27 +71,10 @@ int ls_method(int argc, char **argv, int (*function)(struct dirent *, char *))
 	DIR *dir = NULL;
 	struct dirent *read = NULL;
 	char *directory_to_show_ls = NULL;
-	char home[] = ".";
-	(void) argc;
 
-	if (function == ls_basic)
-		if (argc == 1)
-			directory_to_show_ls = home;
-		else
-		{
-			if ((count_characters(argv[1]) == 2) &&
-				(argv[1][0] = '-') && (argv[1][1] = '-'))
-				directory_to_show_ls = home;
-			else
-				directory_to_show_ls = argv[1];
-		}
-	else
-	{
-		if (argc == 2)
-			directory_to_show_ls = home;
-		else
-			directory_to_show_ls = argv[2];
-	}
+	directory_to_show_ls = get_d_f_name(function, argc, argv);
+	if (!directory_to_show_ls)
+		return (2);
 
 	dir = opendir(directory_to_show_ls);
 	if (dir)

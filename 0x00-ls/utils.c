@@ -80,3 +80,39 @@ int (*check_options_ok(int argc, char **argv))()
 	}
 	return (choose[0].function);
 }
+
+/**
+  * get_d_f_name - concatenate 2 strings
+  * @argc: has the length of the arguments
+  * @argv: has the arguments
+  * @func: function pointer with the right function to use
+  * Return: ponter with the two string concatenate
+  */
+char *get_d_f_name(int (*func)(struct dirent *, char *), int argc, char **argv)
+{
+	char *directory_to_show_ls = NULL;
+	char *home = ".";
+
+	if (func == ls_basic)
+	{
+		if (argc == 1)
+			directory_to_show_ls = home;
+		else
+		{
+			if ((count_characters(argv[1]) == 2) &&
+				(argv[1][0] == '-') && (argv[1][1] == '-'))
+				directory_to_show_ls = home;
+			else
+				directory_to_show_ls = argv[1];
+		}
+	}
+	else
+	{
+		if (argc == 2)
+			directory_to_show_ls = home;
+		else
+			directory_to_show_ls = argv[2];
+	}
+
+	return (directory_to_show_ls);
+}
