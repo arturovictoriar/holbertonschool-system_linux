@@ -3,6 +3,7 @@
 /**
   * error_alert - create a custom error message with perror
   * @directory_to_show_ls: pointer with the name of the directory
+  * @is_file: get the file that no was open because are file
   * Return: erron value or 1 if malloc fails
   */
 int error_alert(char *directory_to_show_ls, char **is_file)
