@@ -61,6 +61,7 @@ int (*check_options_ok(int argc, char **argv))()
 	int index = 0;
 	tag_option choose[] = {
 		{"", ls_basic},
+		{"1", ls_1_flg},
 		{"l", ls_options},
 		{NULL, NULL},
 	};

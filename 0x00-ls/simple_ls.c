@@ -18,6 +18,22 @@ int ls_basic(struct dirent *read, char *directory_to_show_ls, char **ls_c_mes)
 }
 
 /**
+  * ls_1_flg - list the directory o file given in argv without options
+  * @read: has the length of the arguments
+  * @directory_to_show_ls: string with the name of the directory list
+  * @ls_c_mes: ls complete message
+  * Return: nothing
+  */
+int ls_1_flg(struct dirent *read, char *directory_to_show_ls, char **ls_c_mes)
+{
+	(void) directory_to_show_ls;
+
+	if (read->d_name[0] != '.')
+		return (ls_1_flag_m_generetor(read->d_name, ls_c_mes));
+	return (0);
+}
+
+/**
   * ls_options - list the directory o file given in argv with options
   * @read: string with the name of the file listed
   * @directory_to_show_ls: string with the name of the directory list

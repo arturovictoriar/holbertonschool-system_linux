@@ -52,5 +52,7 @@ int add_name_dir(char *d_f_name, char **ls_complet_message);
 int add_list_f_d(char *d_f_name, char **ls_complet_message);
 int mul_name(int argc, int s_num, int i, char **argv, char **ls_c, int f_s_c);
 int print_list_ls(char **ls_complete_message, char **is_file);
+int ls_1_flg(struct dirent *read, char *directory_to_show_ls, char **ls_c_mes);
+int ls_1_flag_m_generetor(char *d_f_name, char **ls_complet_message);
 
 #endif
