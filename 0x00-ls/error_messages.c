@@ -5,7 +5,7 @@
   * @directory_to_show_ls: pointer with the name of the directory
   * Return: erron value or 1 if malloc fails
   */
-int error_alert(char *directory_to_show_ls)
+int error_alert(char *directory_to_show_ls, char **is_file)
 {
 	char cannot_access_message[] = "hls: cannot access ";
 	char cannot_open_directory_message[] = "hls: cannot open directory ";
@@ -19,6 +19,12 @@ int error_alert(char *directory_to_show_ls)
 		break;
 	case ENOENT:
 		error_ls_message = cannot_access_message;
+		break;
+	case ENOTDIR:
+		ls_message_generator(directory_to_show_ls, is_file);
+		return (0);
+	default:
+		error_ls_message = cannot_open_directory_message;
 		break;
 	}
 	error_message = concat_two_strings(directory_to_show_ls, error_ls_message);

@@ -75,7 +75,7 @@ int ls_metho(int argc, char **argv, int (*f)(struct dirent *, char *, char **))
 	DIR *dir = NULL;
 	struct dirent *read = NULL;
 	char *directory_to_show_ls = NULL, *ls_complete_message = NULL;
-	char *temp_message = NULL;
+	char *temp_message = NULL, *is_file = NULL;
 	int f_s_c = 1, index = 0, start_num = 0;
 
 	if (f != ls_basic)
@@ -104,13 +104,10 @@ int ls_metho(int argc, char **argv, int (*f)(struct dirent *, char *, char **))
 			closedir(dir);
 		}
 		else
-			error_alert(directory_to_show_ls);
+			error_alert(directory_to_show_ls, &is_file);
 	}
-	if (ls_complete_message)
-	{
-		printf("%s\n", ls_complete_message);
-		free_memory_messages(ls_complete_message);
-	}
+	if (ls_complete_message || is_file)
+		print_list_ls(&ls_complete_message, &is_file);
 	return (errno);
 }
 
@@ -141,5 +138,7 @@ int main(int argc, char **argv)
 		end_status = error_option(option_tag_ls);
 	}
 
+	if (end_status == 20)
+		return (0);
 	return (end_status);
 }
