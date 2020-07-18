@@ -41,7 +41,7 @@ char *get_ugo_permisions(struct stat *buffer);
 void error_malloc(void);
 char *g_name(int f, int, char **, int index);
 int ls_metho(int argc, char **argv, int (*f)(struct dirent *, char *, char**));
-int error_alert(char *directory_to_show_ls, char **);
+int e_alert(char *, char **, int (*f)(struct dirent *, char *, char**));
 int error_option(char *option_tag_ls);
 int ls_basic(struct dirent *read, char *directory_to_show_ls, char **ls_c_ms);
 int ls_options(struct dirent *read, char *directory_to_show_ls, char **ls_c_);

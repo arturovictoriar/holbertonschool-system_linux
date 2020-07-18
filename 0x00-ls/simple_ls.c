@@ -120,7 +120,7 @@ int ls_metho(int argc, char **argv, int (*f)(struct dirent *, char *, char **))
 			closedir(dir);
 		}
 		else
-			error_alert(directory_to_show_ls, &is_file);
+			e_alert(directory_to_show_ls, &is_file, f);
 	}
 	if (ls_complete_message || is_file)
 		print_list_ls(&ls_complete_message, &is_file);

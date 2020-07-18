@@ -1,12 +1,12 @@
 #include "headerls.h"
 
 /**
-  * error_alert - create a custom error message with perror
-  * @directory_to_show_ls: pointer with the name of the directory
-  * @is_file: get the file that no was open because are file
+  * e_alert - create a custom error message with perror
+  * @d_ls: pointer with the name of the directory
+  * @i_f: get the file that no was open because are file
   * Return: erron value or 1 if malloc fails
   */
-int error_alert(char *directory_to_show_ls, char **is_file)
+int e_alert(char *d_ls, char **i_f, int (*f)(struct dirent *, char *, char **))
 {
 	char cannot_access_message[] = "hls: cannot access ";
 	char cannot_open_directory_message[] = "hls: cannot open directory ";
@@ -22,13 +22,16 @@ int error_alert(char *directory_to_show_ls, char **is_file)
 		error_ls_message = cannot_access_message;
 		break;
 	case ENOTDIR:
-		ls_message_generator(directory_to_show_ls, is_file);
+		if (f == ls_basic)
+			ls_message_generator(d_ls, i_f);
+		else if (f == ls_1_flg)
+			ls_1_flag_m_generetor(d_ls, i_f);
 		return (0);
 	default:
 		error_ls_message = cannot_open_directory_message;
 		break;
 	}
-	error_message = concat_two_strings(directory_to_show_ls, error_ls_message);
+	error_message = concat_two_strings(d_ls, error_ls_message);
 
 	if (!error_message)
 		error_malloc();
