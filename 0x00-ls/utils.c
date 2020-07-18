@@ -68,16 +68,24 @@ int (*check_options_ok(int argc, char **argv, char **option_tag_ls))()
 
 	if (argc > 1)
 	{
-		if (argv[1][0] == '-' &&
+		if (argc == 2 && argv[1][0] == '-' &&
 			count_characters(argv[1]) == 2 && argv[1][1] == '-')
 			return (choose[0].function);
 		for (i_argv = 1; i_argv < argc; i_argv++)
 		{
 			if (argv[i_argv][0] == '-' && count_characters(argv[i_argv]) != 1)
 			{
+				if (argv[i_argv][1] == '-' &&
+					count_characters(argv[i_argv]) == 2)
+				{
+					if (!flag_opt)
+						return (choose[0].function);
+					break;
+				}
+				else
+					func = get_options(argv, i_argv, option_tag_ls);
 				if (!flag_opt)
 					flag_opt = 1;
-				func = get_options(argv, i_argv, option_tag_ls);
 				if (func == -1)
 					return (NULL);
 			}
@@ -114,7 +122,13 @@ char *g_name(int f, int argc, char **argv, int index)
 				directory_to_show_ls = argv[1];
 		}
 		else
-			directory_to_show_ls = argv[index];
+		{
+			if ((count_characters(argv[index]) == 2) &&
+				(argv[index][0] == '-') && (argv[index][1] == '-'))
+				directory_to_show_ls = NULL;
+			else
+				directory_to_show_ls = argv[index];
+		}
 	}
 	else
 	{
@@ -123,6 +137,8 @@ char *g_name(int f, int argc, char **argv, int index)
 		else
 		{
 			if (!(_strcmp("-1", argv[index])))
+				return (NULL);
+			else if (!(_strcmp("--", argv[index])))
 				return (NULL);
 			directory_to_show_ls = argv[index];
 		}
