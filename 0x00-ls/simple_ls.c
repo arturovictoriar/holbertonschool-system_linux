@@ -6,11 +6,14 @@
   * @read: has the length of the arguments
   * @directory_to_show_ls: string with the name of the directory list
   * @ls_c_mes: ls complete message
+  * @option_tag_ls: all option selected
   * Return: 0 on sucess
   */
-int ls_basic(struct dirent *read, char *directory_to_show_ls, char **ls_c_mes)
+int ls_basic(struct dirent *read, char *directory_to_show_ls,
+	char **ls_c_mes, char **option_tag_ls)
 {
 	(void) directory_to_show_ls;
+	(void) option_tag_ls;
 
 	if (read->d_name[0] != '.')
 		return (ls_message_generator(read->d_name, ls_c_mes));
@@ -22,11 +25,14 @@ int ls_basic(struct dirent *read, char *directory_to_show_ls, char **ls_c_mes)
   * @read: has the length of the arguments
   * @directory_to_show_ls: string with the name of the directory list
   * @ls_c_mes: ls complete message
+  * @option_tag_ls: all option selected
   * Return: 0 on sucess
   */
-int ls_1_flg(struct dirent *read, char *directory_to_show_ls, char **ls_c_mes)
+int ls_1_flg(struct dirent *read, char *directory_to_show_ls,
+	char **ls_c_mes, char **option_tag_ls)
 {
 	(void) directory_to_show_ls;
+	(void) option_tag_ls;
 
 	if (read->d_name[0] != '.')
 		return (ls_1_flag_m_generetor(read->d_name, ls_c_mes));
@@ -38,15 +44,18 @@ int ls_1_flg(struct dirent *read, char *directory_to_show_ls, char **ls_c_mes)
   * @read: string with the name of the file listed
   * @directory_to_show_ls: string with the name of the directory list
   * @ls_c_me: ls complete message
+  * @option_tag_ls: all option selected
   * Return: nothing
   */
-int ls_options(struct dirent *read, char *directory_to_show_ls, char **ls_c_me)
+int ls_options(struct dirent *read, char *directory_to_show_ls,
+	char **ls_c_me, char **option_tag_ls)
 {
 	struct stat buffer = {0};
 	char *file_or_directory = NULL, *d_name_d = NULL, *ugo_permision = NULL;
 	char *time = NULL, *user_id = NULL, *group_id = NULL;
 	long size_f_or_d = 0;
 	(void) ls_c_me;
+	(void) option_tag_ls;
 
 	d_name_d = add_bar_diagonal_end(read->d_name);
 	if (!d_name_d)
@@ -83,16 +92,19 @@ int ls_options(struct dirent *read, char *directory_to_show_ls, char **ls_c_me)
   * ls_metho - list the directory o file given in argv
   * @argc: has the length of the arguments
   * @argv: has the arguments
+  * @option_tag_ls: all option selected
   * @f: function pointer with the right function to use
   * Return: 0 to indicate a good working of the program otherwise errno value
   */
-int ls_metho(int argc, char **argv, int (*f)(struct dirent *, char *, char **))
+int ls_metho(int argc, char **argv, char **option_tag_ls,
+	int (*f)(struct dirent *, char *, char **, char **))
 {
 	DIR *dir = NULL;
 	struct dirent *read = NULL;
 	char *directory_to_show_ls = NULL, *ls_complete_message = NULL;
 	char *temp_message = NULL, *is_file = NULL;
 	int f_s_c = 1, index = 0, start_num = 0;
+	(void) option_tag_ls;
 
 	if (f != ls_basic)
 		f_s_c = 0;
@@ -110,7 +122,7 @@ int ls_metho(int argc, char **argv, int (*f)(struct dirent *, char *, char **))
 			mul_name(argc, start_num, index, argv, &ls_complete_message, f_s_c);
 			while ((read = readdir(dir)) != NULL)
 			{
-				f(read, directory_to_show_ls, &temp_message);
+				f(read, directory_to_show_ls, &temp_message, option_tag_ls);
 			}
 			if (temp_message)
 			{
@@ -137,14 +149,14 @@ int main(int argc, char **argv)
 {
 	char *option_tag_ls = NULL;
 	int end_status = 0;
-	int (*function)(struct dirent *, char *, char **) = NULL;
+	int (*function)(struct dirent *, char *, char **, char **) = NULL;
 
 	/* Check if exist the tag name*/
 	function = check_options_ok(argc, argv, &option_tag_ls);
 	if (function)
 	{
 		/* Call ls funciontion*/
-		end_status = ls_metho(argc, argv, function);
+		end_status = ls_metho(argc, argv, &option_tag_ls, function);
 		if (!end_status)
 			return (end_status);
 	}
@@ -153,5 +165,7 @@ int main(int argc, char **argv)
 
 	if (end_status == 20)
 		return (0);
+	if (end_status > 2)
+		end_status = 2;
 	return (end_status);
 }

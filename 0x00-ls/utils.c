@@ -63,6 +63,7 @@ int (*check_options_ok(int argc, char **argv, char **option_tag_ls))()
 	tag_option choose[] = {
 		{"", ls_basic},
 		{"1", ls_1_flg},
+		{"a", ls_a_flg},
 		{NULL, NULL},
 	};
 
@@ -153,7 +154,8 @@ char *g_name(int f, int argc, char **argv, int index)
   * @f: function pointer with the right function to use
   * Return: the rigth name of directory
   */
-int choose_value_start(int argc, int (*f)(struct dirent *, char *, char **))
+int choose_value_start(int argc,
+	int (*f)(struct dirent *, char *, char **, char **))
 {
 	int start_num = 0;
 

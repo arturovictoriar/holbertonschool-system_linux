@@ -40,6 +40,7 @@ int get_options(char **argv, int i_argv, char **option_tag_ls)
 	tag_option choose[] = {
 		{"", ls_basic},
 		{"1", ls_1_flg},
+		{"a", ls_a_flg},
 		{NULL, NULL},
 	};
 

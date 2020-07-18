@@ -7,7 +7,8 @@
   * @f: function pointer with the right function to use
   * Return: erron value or 1 if malloc fails
   */
-int e_alert(char *d_ls, char **i_f, int (*f)(struct dirent *, char *, char **))
+int e_alert(char *d_ls, char **i_f,
+	int (*f)(struct dirent *, char *, char **, char **))
 {
 	char cannot_access_message[] = "hls: cannot access ";
 	char cannot_open_directory_message[] = "hls: cannot open directory ";
