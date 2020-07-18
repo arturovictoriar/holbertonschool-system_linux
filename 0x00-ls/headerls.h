@@ -45,7 +45,7 @@ int error_alert(char *directory_to_show_ls, char **);
 int error_option(char *option_tag_ls);
 int ls_basic(struct dirent *read, char *directory_to_show_ls, char **ls_c_ms);
 int ls_options(struct dirent *read, char *directory_to_show_ls, char **ls_c_);
-int (*check_options_ok(int argc, char **argv))();
+int (*check_options_ok(int argc, char **argv, char **))();
 int ls_message_generator(char *d_f_name, char **ls_complet_message);
 int choose_value_start(int argc, int (*f)(struct dirent *, char *, char **));
 int add_name_dir(char *d_f_name, char **ls_complet_message);
@@ -54,5 +54,7 @@ int mul_name(int argc, int s_num, int i, char **argv, char **ls_c, int f_s_c);
 int print_list_ls(char **ls_complete_message, char **is_file);
 int ls_1_flg(struct dirent *read, char *directory_to_show_ls, char **ls_c_mes);
 int ls_1_flag_m_generetor(char *d_f_name, char **ls_complet_message);
+int _strcmp(char *s1, char *s2);
+int get_options(char **argv, int i_argv, char **option_tag_ls);
 
 #endif

@@ -2,11 +2,11 @@
 #include "headerls.h"
 
 /**
-  * ls_basic - list the directory o file given in argv without options
+  * ls_basic - list the directory o file given in argv without options in a lin
   * @read: has the length of the arguments
   * @directory_to_show_ls: string with the name of the directory list
   * @ls_c_mes: ls complete message
-  * Return: nothing
+  * Return: 0 on sucess
   */
 int ls_basic(struct dirent *read, char *directory_to_show_ls, char **ls_c_mes)
 {
@@ -18,11 +18,11 @@ int ls_basic(struct dirent *read, char *directory_to_show_ls, char **ls_c_mes)
 }
 
 /**
-  * ls_1_flg - list the directory o file given in argv without options
+  * ls_1_flg - list the directory o file given in argv without options in lines
   * @read: has the length of the arguments
   * @directory_to_show_ls: string with the name of the directory list
   * @ls_c_mes: ls complete message
-  * Return: nothing
+  * Return: 0 on sucess
   */
 int ls_1_flg(struct dirent *read, char *directory_to_show_ls, char **ls_c_mes)
 {
@@ -103,7 +103,7 @@ int ls_metho(int argc, char **argv, int (*f)(struct dirent *, char *, char **))
 		temp_message = NULL;
 		directory_to_show_ls = g_name(f_s_c, argc, argv, index + start_num);
 		if (!directory_to_show_ls)
-			return (2);
+			continue;
 		dir = opendir(directory_to_show_ls);
 		if (dir)
 		{
@@ -140,7 +140,7 @@ int main(int argc, char **argv)
 	int (*function)(struct dirent *, char *, char **) = NULL;
 
 	/* Check if exist the tag name*/
-	function = check_options_ok(argc, argv);
+	function = check_options_ok(argc, argv, &option_tag_ls);
 	if (function)
 	{
 		/* Call ls funciontion*/
@@ -149,10 +149,7 @@ int main(int argc, char **argv)
 			return (end_status);
 	}
 	else
-	{
-		option_tag_ls = argv[1];
 		end_status = error_option(option_tag_ls);
-	}
 
 	if (end_status == 20)
 		return (0);

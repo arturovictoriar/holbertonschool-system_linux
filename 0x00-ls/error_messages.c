@@ -60,12 +60,18 @@ int error_option(char *option_tag_ls)
 	char invalid_message[] = "hls: invalid option --";
 	char help_message[] = "Try 'hls --help' for more information.";
 
-	if (option_tag_ls[1] == '-')
-		fprintf(stderr, "%s '%s'\n%s\n",
-			unrecognized_message, option_tag_ls, help_message);
+	if (option_tag_ls && option_tag_ls[1] == '-')
+	{
+		if (option_tag_ls)
+			fprintf(stderr, "%s '%s'\n%s\n",
+				unrecognized_message, option_tag_ls, help_message);
+	}
 	else
-		fprintf(stderr, "%s '%s'\n%s\n",
-			invalid_message, &(option_tag_ls[1]), help_message);
+	{
+		if (option_tag_ls)
+			fprintf(stderr, "%s '%c'\n%s\n",
+				invalid_message, option_tag_ls[0], help_message);
+	}
 
 	return (2);
 }

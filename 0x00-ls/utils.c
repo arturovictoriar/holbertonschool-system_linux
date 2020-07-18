@@ -54,30 +54,36 @@ char *concat_two_strings(char *str1, char *str2)
   * check_options_ok - check if the tag option exist
   * @argc: has the length of the arguments
   * @argv: has the arguments
+  * @option_tag_ls: options tags of ls
   * Return: 1 if the tag exist otherwise 0
   */
-int (*check_options_ok(int argc, char **argv))()
+int (*check_options_ok(int argc, char **argv, char **option_tag_ls))()
 {
-	int index = 0;
+	int i_argv = 0, flag_opt = 0, func = 0;
 	tag_option choose[] = {
 		{"", ls_basic},
 		{"1", ls_1_flg},
-		{"l", ls_options},
 		{NULL, NULL},
 	};
 
 	if (argc > 1)
 	{
-		if (argv[1][0] == '-' && count_characters(argv[1]) != 1)
+		if (argv[1][0] == '-' &&
+			count_characters(argv[1]) == 2 && argv[1][1] == '-')
+			return (choose[0].function);
+		for (i_argv = 1; i_argv < argc; i_argv++)
 		{
-			if (!(argv[1][1] == '-' && count_characters(argv[1]) == 2))
+			if (argv[i_argv][0] == '-' && count_characters(argv[i_argv]) != 1)
 			{
-				for (index = 1; choose[index].option != NULL; index++)
-					if (argv[1][1] == choose[index].option[0])
-						return (choose[index].function);
-				return (choose[index].function);
+				if (!flag_opt)
+					flag_opt = 1;
+				func = get_options(argv, i_argv, option_tag_ls);
+				if (func == -1)
+					return (NULL);
 			}
 		}
+		if (flag_opt)
+			return (choose[func].function);
 	}
 	return (choose[0].function);
 }
@@ -115,7 +121,11 @@ char *g_name(int f, int argc, char **argv, int index)
 		if (argc == 2)
 			directory_to_show_ls = home;
 		else
+		{
+			if (!(_strcmp("-1", argv[index])))
+				return (NULL);
 			directory_to_show_ls = argv[index];
+		}
 	}
 
 	return (directory_to_show_ls);
@@ -137,11 +147,6 @@ int choose_value_start(int argc, int (*f)(struct dirent *, char *, char **))
 			start_num = 1;
 	}
 	else
-	{
-		if (argc > 2)
-			start_num = 2;
-		else
-			start_num = 1;
-	}
+		start_num = 1;
 	return (start_num);
 }
