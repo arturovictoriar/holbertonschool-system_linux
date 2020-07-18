@@ -4,6 +4,7 @@
   * e_alert - create a custom error message with perror
   * @d_ls: pointer with the name of the directory
   * @i_f: get the file that no was open because are file
+  * @f: function pointer with the right function to use
   * Return: erron value or 1 if malloc fails
   */
 int e_alert(char *d_ls, char **i_f, int (*f)(struct dirent *, char *, char **))
