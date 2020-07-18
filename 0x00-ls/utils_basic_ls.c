@@ -159,6 +159,7 @@ int mul_name(int argc, int s_num, int i, char **argv, char **ls_c, int f_s_c)
   * print_list_ls - print the ls content in stdout
   * @ls_complete_message: pointer with the complete list file and dir
   * @is_file: pointer with the file could no open because are file
+  * @h_permi: all file no have permission
   * Return: 0 ok otherwise 1
   */
 int print_list_ls(char **ls_complete_message, char **is_file, char **h_permi)

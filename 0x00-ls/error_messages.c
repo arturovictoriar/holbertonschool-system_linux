@@ -5,6 +5,7 @@
   * @d_ls: pointer with the name of the directory
   * @i_f: get the file that no was open because are file
   * @f: function pointer with the right function to use
+  * @h_permi: all file no have permission
   * Return: erron value or 1 if malloc fails
   */
 int e_alert(char *d_ls, char **i_f,
