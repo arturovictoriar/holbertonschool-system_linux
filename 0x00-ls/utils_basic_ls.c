@@ -138,9 +138,9 @@ int add_list_f_d(char *d_f_name, char **ls_complet_message)
   */
 int mul_name(int argc, int s_num, int i, char **argv, char **ls_c, int f_s_c)
 {
-	(void) f_s_c;
-
-	if (argc - s_num != 1)
+	if (f_s_c && argc - s_num != 1)
+		add_name_dir(argv[i + 1], ls_c);
+	else if (!f_s_c && argc - s_num > 2)
 		add_name_dir(argv[i + 1], ls_c);
 	return (0);
 }
