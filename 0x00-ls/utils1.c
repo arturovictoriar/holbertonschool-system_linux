@@ -123,6 +123,7 @@ char *get_proper_basic_dir(int argc, char **argv, int index)
 		else
 			directory_to_show_ls = argv[index];
 	}
+	return (directory_to_show_ls);
 }
 
 /**
