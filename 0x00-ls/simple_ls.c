@@ -132,7 +132,7 @@ int ls_metho(int argc, char **argv, char **option_tag_ls,
 			closedir(dir);
 		}
 		else
-			e_alert(directory_to_show_ls, &is_file, f, &h_permi);
+			e_alert(directory_to_show_ls, &is_file, &h_permi, f);
 	}
 	if (ls_complete_message || is_file || h_permi)
 		print_list_ls(&ls_complete_message, &is_file, &h_permi);

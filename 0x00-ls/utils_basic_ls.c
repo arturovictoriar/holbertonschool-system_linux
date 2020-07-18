@@ -178,7 +178,7 @@ int print_list_ls(char **ls_complete_message, char **is_file, char **h_permi)
 	}
 	if (*h_permi)
 	{
-		printf("%s\n", *h_permi);
+		fprintf(stderr, "%s\n", *h_permi);
 		free_memory_messages(*h_permi);
 	}
 	return (0);

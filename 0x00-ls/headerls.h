@@ -42,8 +42,8 @@ void error_malloc(void);
 char *g_name(int f, int, char **, int index);
 int ls_metho(int argc, char **argv, char **,
 	int (*f)(struct dirent *, char *, char**, char **));
-int e_alert(char *, char **,
-	int (*f)(struct dirent *, char *, char**, char **), char **h_permi);
+int e_alert(char *, char **, char **h_permi,
+	int (*f)(struct dirent *, char *, char**, char **));
 int error_option(char *option_tag_ls);
 int ls_basic(struct dirent *read,
 	char *directory_to_show_ls, char **ls_c_ms, char **);
