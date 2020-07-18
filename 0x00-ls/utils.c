@@ -9,7 +9,8 @@ int count_characters(char *directory_to_show_ls)
 {
 	int index = 0;
 
-	for (index = 0; directory_to_show_ls[index] != '\0'; index++)
+	for (index = 0; directory_to_show_ls &&
+		directory_to_show_ls[index] != '\0'; index++)
 		continue;
 	return (index);
 }
@@ -84,7 +85,7 @@ int (*check_options_ok(int argc, char **argv, char **option_tag_ls))()
 					break;
 				}
 				else
-					func = get_options(argv, i_argv, option_tag_ls);
+					func = get_options(argv, i_argv, option_tag_ls, choose);
 				if (!flag_opt)
 					flag_opt = 1;
 				if (func == -1)
@@ -137,9 +138,8 @@ char *g_name(int f, int argc, char **argv, int index)
 			directory_to_show_ls = home;
 		else
 		{
-			if (!(_strcmp("-1", argv[index])))
-				return (NULL);
-			else if (!(_strcmp("--", argv[index])))
+			if (!(_strcmp("-1", argv[index])) || !(_strcmp("--", argv[index]))
+				|| !(_strcmp("-a", argv[index])))
 				return (NULL);
 			directory_to_show_ls = argv[index];
 		}

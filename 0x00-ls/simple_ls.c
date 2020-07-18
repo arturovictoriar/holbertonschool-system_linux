@@ -136,6 +136,8 @@ int ls_metho(int argc, char **argv, char **option_tag_ls,
 	}
 	if (ls_complete_message || is_file)
 		print_list_ls(&ls_complete_message, &is_file);
+	if (*option_tag_ls)
+		free_memory_messages(*option_tag_ls);
 	return (errno);
 }
 

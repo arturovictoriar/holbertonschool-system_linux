@@ -61,8 +61,9 @@ int ls_1_flg(struct dirent *read,
 	char *directory_to_show_ls, char **ls_c_mes, char **);
 int ls_1_flag_m_generetor(char *d_f_name, char **ls_complet_message);
 int _strcmp(char *s1, char *s2);
-int get_options(char **argv, int i_argv, char **option_tag_ls);
+int get_options(char **argv, int i_argv, char **, tag_option *);
 int ls_a_flg(struct dirent *read,
 	char *directory_to_show_ls, char **ls_c_mes, char **);
+int set_all_flgs(char **option_tag_ls, char *op);
 
 #endif
