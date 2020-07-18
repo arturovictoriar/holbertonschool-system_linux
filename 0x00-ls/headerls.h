@@ -65,5 +65,7 @@ int get_options(char **argv, int i_argv, char **, tag_option *);
 int ls_a_flg(struct dirent *read,
 	char *directory_to_show_ls, char **ls_c_mes, char **);
 int set_all_flgs(char **option_tag_ls, char *op);
+char *get_proper_basic_dir(int argc, char **argv, int index);
+char *get_proper_option_dir(int argc, char **argv, int index);
 
 #endif

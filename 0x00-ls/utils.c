@@ -108,54 +108,12 @@ int (*check_options_ok(int argc, char **argv, char **option_tag_ls))()
   */
 char *g_name(int f, int argc, char **argv, int index)
 {
-	char *directory_to_show_ls = NULL, *home = ".";
-	int count_dashes = 0, count_ops = 0, index_op;
+	char *directory_to_show_ls = NULL;
 
 	if (f)
-	{
-		if (argc == 1)
-			directory_to_show_ls = home;
-		else if (argc == 2)
-		{
-			if ((count_characters(argv[1]) == 2) &&
-				(argv[1][0] == '-') && (argv[1][1] == '-'))
-				directory_to_show_ls = home;
-			else
-				directory_to_show_ls = argv[1];
-		}
-		else
-		{
-			if ((count_characters(argv[index]) == 2) &&
-				(argv[index][0] == '-') && (argv[index][1] == '-'))
-				directory_to_show_ls = NULL;
-			else
-				directory_to_show_ls = argv[index];
-		}
-	}
+		directory_to_show_ls = get_proper_basic_dir(argc, argv, index);
 	else
-	{
-		if (argc == 2)
-			directory_to_show_ls = home;
-		else
-		{
-			if (index + 1 == argc)
-			{
-				for (index_op = 0; index_op < argc; index_op++)
-				{
-					if (!_strcmp("--", argv[index_op]))
-						count_dashes++;
-					if (!_strcmp("-1", argv[index_op]))
-						count_ops++;
-				}
-				if (argc - count_ops - count_dashes <= 1)
-					return (home);
-			}
-			if (!(_strcmp("-1", argv[index])) || !(_strcmp("--", argv[index]))
-				|| !(_strcmp("-a", argv[index])))
-				return (NULL);
-			directory_to_show_ls = argv[index];
-		}
-	}
+		directory_to_show_ls = get_proper_option_dir(argc, argv, index);
 
 	return (directory_to_show_ls);
 }

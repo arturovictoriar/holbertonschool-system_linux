@@ -93,3 +93,70 @@ int set_all_flgs(char **option_tag_ls, char *op)
 	*option_tag_ls = message;
 	return (0);
 }
+
+/**
+  * get_proper_basic_dir - concatenate 2 strings
+  * @argc: has the length of the arguments
+  * @argv: has the arguments
+  * @index: position in argc of the directory to read
+  * Return: ponter with the proper directory
+  */
+char *get_proper_basic_dir(int argc, char **argv, int index)
+{
+	char *directory_to_show_ls = NULL, *home = ".";
+
+	if (argc == 1)
+		directory_to_show_ls = home;
+	else if (argc == 2)
+	{
+		if ((count_characters(argv[1]) == 2) &&
+			(argv[1][0] == '-') && (argv[1][1] == '-'))
+			directory_to_show_ls = home;
+		else
+			directory_to_show_ls = argv[1];
+	}
+	else
+	{
+		if ((count_characters(argv[index]) == 2) &&
+			(argv[index][0] == '-') && (argv[index][1] == '-'))
+			directory_to_show_ls = NULL;
+		else
+			directory_to_show_ls = argv[index];
+	}
+}
+
+/**
+  * get_proper_option_dir - concatenate 2 strings
+  * @argc: has the length of the arguments
+  * @argv: has the arguments
+  * @index: position in argc of the directory to read
+  * Return: ponter with the proper directory
+  */
+char *get_proper_option_dir(int argc, char **argv, int index)
+{
+	char *directory_to_show_ls = NULL, *home = ".";
+	int count_dashes = 0, count_ops = 0, index_op = 0;
+
+	if (argc == 2)
+		directory_to_show_ls = home;
+	else
+	{
+		if (index + 1 == argc)
+		{
+			for (index_op = 0; index_op < argc; index_op++)
+			{
+				if (!_strcmp("--", argv[index_op]))
+					count_dashes++;
+				if (!_strcmp("-1", argv[index_op]))
+					count_ops++;
+			}
+			if (argc - count_ops - count_dashes <= 1)
+				return (home);
+		}
+		if (!(_strcmp("-1", argv[index])) || !(_strcmp("--", argv[index]))
+			|| !(_strcmp("-a", argv[index])))
+			return (NULL);
+		directory_to_show_ls = argv[index];
+	}
+	return (directory_to_show_ls);
+}
