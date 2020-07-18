@@ -8,18 +8,20 @@
   * Return: erron value or 1 if malloc fails
   */
 int e_alert(char *d_ls, char **i_f,
-	int (*f)(struct dirent *, char *, char **, char **))
+	int (*f)(struct dirent *, char *, char **, char **), char **h_permi)
 {
 	char cannot_access_message[] = "hls: cannot access ";
 	char cannot_open_directory_message[] = "hls: cannot open directory ";
-	char *error_ls_message = NULL;
-	char *error_message = NULL;
+	char *error_ls_message = NULL, *error_message = NULL, *t_mes = NULL;
 
 	switch (errno)
 	{
 	case EACCES:
 		error_ls_message = cannot_open_directory_message;
-		break;
+		t_mes = concat_two_strings(d_ls, error_ls_message);
+		ls_1_flag_m_generetor(t_mes, h_permi);
+		free_memory_messages(t_mes);
+		return (0);
 	case ENOENT:
 		error_ls_message = cannot_access_message;
 		break;
