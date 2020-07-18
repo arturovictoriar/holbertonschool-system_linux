@@ -108,8 +108,8 @@ int (*check_options_ok(int argc, char **argv, char **option_tag_ls))()
   */
 char *g_name(int f, int argc, char **argv, int index)
 {
-	char *directory_to_show_ls = NULL;
-	char *home = ".";
+	char *directory_to_show_ls = NULL, *home = ".";
+	int count_dashes = 0, count_ops = 0, index_op;
 
 	if (f)
 	{
@@ -138,6 +138,18 @@ char *g_name(int f, int argc, char **argv, int index)
 			directory_to_show_ls = home;
 		else
 		{
+			if (index + 1 == argc)
+			{
+				for (index_op = 0; index_op < argc; index_op++)
+				{
+					if (!_strcmp("--", argv[index_op]))
+						count_dashes++;
+					if (!_strcmp("-1", argv[index_op]))
+						count_ops++;
+				}
+				if (argc - count_ops - count_dashes <= 1)
+					return (home);
+			}
 			if (!(_strcmp("-1", argv[index])) || !(_strcmp("--", argv[index]))
 				|| !(_strcmp("-a", argv[index])))
 				return (NULL);

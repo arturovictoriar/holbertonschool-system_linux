@@ -138,15 +138,19 @@ int add_list_f_d(char *d_f_name, char **ls_complet_message)
   */
 int mul_name(int argc, int s_num, int i, char **argv, char **ls_c, int f_s_c)
 {
-	int count_dashes = 0, index = 0;
+	int count_dashes = 0, index = 0, count_ops = 0;
 
 	for (index = 0; index < argc; index++)
+	{
 		if (!_strcmp("--", argv[index]))
 			count_dashes++;
+		if (!_strcmp("-1", argv[index]))
+			count_ops++;
+	}
 
 	if (f_s_c && argc - s_num - count_dashes > 1)
 		add_name_dir(argv[i + 1], ls_c);
-	else if (!f_s_c && argc - s_num - count_dashes > 2)
+	else if (!f_s_c && argc - s_num - count_dashes - count_ops >= 2)
 		add_name_dir(argv[i + 1], ls_c);
 	return (0);
 }
