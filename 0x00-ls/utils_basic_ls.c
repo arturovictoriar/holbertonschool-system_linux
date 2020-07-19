@@ -142,9 +142,9 @@ int mul_name(int argc, int s_num, int i, char **argv, char **ls_c, int f_s_c)
 
 	for (index = 0; index < argc; index++)
 	{
-		if (!_strcmp("--", argv[index]))
+		if (!_str_cmp("--", argv[index]))
 			count_dashes++;
-		if (!_strcmp("-1", argv[index]))
+		if (!_str_cmp("-1", argv[index]))
 			count_ops++;
 	}
 
