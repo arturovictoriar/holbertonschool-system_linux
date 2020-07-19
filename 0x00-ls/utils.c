@@ -61,13 +61,9 @@ char *concat_two_strings(char *str1, char *str2)
 int (*check_options_ok(int argc, char **argv, char **option_tag_ls))()
 {
 	int i_argv = 0, flag_opt = 0, func = 0;
-	tag_option choose[] = {
-		{"", ls_basic},
-		{"1", ls_1_flg},
-		{"a", ls_a_flg},
-		{NULL, NULL},
-	};
+	tag_option *choose = NULL;
 
+	choose = all_hls_opt();
 	if (argc > 1)
 	{
 		if (argc == 2 && argv[1][0] == '-' &&

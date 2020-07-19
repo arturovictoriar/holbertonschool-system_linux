@@ -86,7 +86,7 @@ int set_all_flgs(char **option_tag_ls, char *op)
 	if (!*option_tag_ls)
 		message = concat_two_strings(op, empty);
 	else
-		message = concat_two_strings(*option_tag_ls, op);
+		message = concat_two_strings(op, *option_tag_ls);
 
 	if (*option_tag_ls)
 		free_memory_messages(*option_tag_ls);
@@ -136,7 +136,7 @@ char *get_proper_basic_dir(int argc, char **argv, int index)
 char *get_proper_option_dir(int argc, char **argv, int index)
 {
 	char *directory_to_show_ls = NULL, *home = ".";
-	int count_dashes = 0, count_ops = 0, index_op = 0;
+	int count_ops = 0, index_op = 0;
 
 	if (argc == 2)
 		directory_to_show_ls = home;
@@ -145,17 +145,18 @@ char *get_proper_option_dir(int argc, char **argv, int index)
 		if (index + 1 == argc)
 		{
 			for (index_op = 0; index_op < argc; index_op++)
-			{
-				if (!_str_cmp("--", argv[index_op]))
-					count_dashes++;
-				if (!_str_cmp("-1", argv[index_op]))
+				if (!_str_cmp("--", argv[index_op]) ||
+					!_str_cmp("-1", argv[index_op]) ||
+					!_str_cmp("-a", argv[index_op]) ||
+					!_str_cmp("-A", argv[index_op]))
 					count_ops++;
-			}
-			if (argc - count_ops - count_dashes <= 1)
+			if (argc - count_ops <= 1)
 				return (home);
 		}
-		if (!(_str_cmp("-1", argv[index])) || !(_str_cmp("--", argv[index]))
-			|| !(_str_cmp("-a", argv[index])))
+		if (!(_str_cmp("-1", argv[index])) ||
+			!(_str_cmp("--", argv[index])) ||
+			!(_str_cmp("-a", argv[index])) ||
+			!(_str_cmp("-A", argv[index])))
 			return (NULL);
 		directory_to_show_ls = argv[index];
 	}

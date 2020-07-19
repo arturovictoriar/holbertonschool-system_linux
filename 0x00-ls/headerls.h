@@ -69,5 +69,8 @@ char *get_proper_basic_dir(int argc, char **argv, int index);
 char *get_proper_option_dir(int argc, char **argv, int index);
 int print_all_output(char **is_file, char **h_permi,
 	char **ls_complete_message, char **option_tag_ls, int error_flag1);
+int ls_A_flg(struct dirent *read, char *directory_to_show_ls,
+	char **ls_c_mes, char **option_tag_ls);
+tag_option *all_hls_opt(void);
 
 #endif

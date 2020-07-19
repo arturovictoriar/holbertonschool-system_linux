@@ -34,6 +34,8 @@ int e_alert(char *d_ls, char **i_f, char **h_permi,
 			ls_message_generator(d_ls, i_f);
 		else if (f == ls_1_flg)
 			ls_1_flag_m_generetor(d_ls, i_f);
+		else if (f == ls_a_flg || f == ls_A_flg)
+			ls_message_generator(d_ls, i_f);
 		return (0);
 	default:
 		error_ls_message = cannot_open_directory_message;
