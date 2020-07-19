@@ -25,7 +25,7 @@ int e_alert(char *d_ls, char **i_f, char **h_permi,
 		ls_1_flag_m_generetor(add_p_denied, h_permi);
 		free_memory_messages(t_mes);
 		free_memory_messages(add_p_denied);
-		return (0);
+		return (2);
 	case ENOENT:
 		error_ls_message = cannot_access_message;
 		break;

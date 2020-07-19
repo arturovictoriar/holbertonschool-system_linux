@@ -103,13 +103,11 @@ int ls_metho(int argc, char **argv, char **option_tag_ls,
 	struct dirent *read = NULL;
 	char *directory_to_show_ls = NULL, *ls_complete_message = NULL;
 	char *temp_message = NULL, *is_file = NULL, *h_permi = NULL;
-	int f_s_c = 1, index = 0, start_num = 0;
-	(void) option_tag_ls;
+	int f_s_c = 1, index = 0, start_num = 0, error_flag = 0, e_flag1 = 0;
 
 	if (f != ls_basic)
 		f_s_c = 0;
 	start_num = choose_value_start(argc, f);
-
 	for (index = 0; index < argc - start_num; index++)
 	{
 		temp_message = NULL;
@@ -132,12 +130,15 @@ int ls_metho(int argc, char **argv, char **option_tag_ls,
 			closedir(dir);
 		}
 		else
-			e_alert(directory_to_show_ls, &is_file, &h_permi, f);
+			if (!e_flag1)
+				e_flag1 = e_alert(directory_to_show_ls, &is_file, &h_permi, f);
+			else
+				e_alert(directory_to_show_ls, &is_file, &h_permi, f);			
 	}
-	if (ls_complete_message || is_file || h_permi)
-		print_list_ls(&ls_complete_message, &is_file, &h_permi);
-	if (*option_tag_ls)
-		free_memory_messages(*option_tag_ls);
+	error_flag = print_all_output(&is_file, &h_permi,
+		&ls_complete_message, option_tag_ls, e_flag1);
+	if (error_flag)
+		return (error_flag);
 	return (errno);
 }
 

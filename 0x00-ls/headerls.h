@@ -67,5 +67,7 @@ int ls_a_flg(struct dirent *read,
 int set_all_flgs(char **option_tag_ls, char *op);
 char *get_proper_basic_dir(int argc, char **argv, int index);
 char *get_proper_option_dir(int argc, char **argv, int index);
+int print_all_output(char **is_file, char **h_permi,
+	char **ls_complete_message, char **option_tag_ls, int error_flag1);
 
 #endif
