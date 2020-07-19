@@ -1,12 +1,12 @@
 #include "headerls.h"
 
 /**
- * _str_cmp - compare 2 string.
+ * _strcmp - compare 2 string.
  * @s1: is a pointer type char
  * @s2: is a pointer type char
  * Return: 0 on success otherwise other value.
  */
-int _str_cmp(char *s1, char *s2)
+int _strcmp(char *s1, char *s2)
 {
 	int result = -1, i = 0;
 
@@ -146,16 +146,16 @@ char *get_proper_option_dir(int argc, char **argv, int index)
 		{
 			for (index_op = 0; index_op < argc; index_op++)
 			{
-				if (!_str_cmp("--", argv[index_op]))
+				if (!_strcmp("--", argv[index_op]))
 					count_dashes++;
-				if (!_str_cmp("-1", argv[index_op]))
+				if (!_strcmp("-1", argv[index_op]))
 					count_ops++;
 			}
 			if (argc - count_ops - count_dashes <= 1)
 				return (home);
 		}
-		if (!(_str_cmp("-1", argv[index])) || !(_str_cmp("--", argv[index]))
-			|| !(_str_cmp("-a", argv[index])))
+		if (!(_strcmp("-1", argv[index])) || !(_strcmp("--", argv[index]))
+			|| !(_strcmp("-a", argv[index])))
 			return (NULL);
 		directory_to_show_ls = argv[index];
 	}

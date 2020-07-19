@@ -142,9 +142,9 @@ int mul_name(int argc, int s_num, int i, char **argv, char **ls_c, int f_s_c)
 
 	for (index = 0; index < argc; index++)
 	{
-		if (!_str_cmp("--", argv[index]))
+		if (!_strcmp("--", argv[index]))
 			count_dashes++;
-		if (!_str_cmp("-1", argv[index]))
+		if (!_strcmp("-1", argv[index]))
 			count_ops++;
 	}
 
@@ -159,10 +159,9 @@ int mul_name(int argc, int s_num, int i, char **argv, char **ls_c, int f_s_c)
   * print_list_ls - print the ls content in stdout
   * @ls_complete_message: pointer with the complete list file and dir
   * @is_file: pointer with the file could no open because are file
-  * @h_permi: all file no have permission
   * Return: 0 ok otherwise 1
   */
-int print_list_ls(char **ls_complete_message, char **is_file, char **h_permi)
+int print_list_ls(char **ls_complete_message, char **is_file)
 {
 	if (*is_file)
 	{
@@ -175,11 +174,6 @@ int print_list_ls(char **ls_complete_message, char **is_file, char **h_permi)
 			printf("\n");
 		printf("%s\n", *ls_complete_message);
 		free_memory_messages(*ls_complete_message);
-	}
-	if (*h_permi)
-	{
-		fprintf(stderr, "%s\n", *h_permi);
-		free_memory_messages(*h_permi);
 	}
 	return (0);
 }

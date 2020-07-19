@@ -42,7 +42,7 @@ void error_malloc(void);
 char *g_name(int f, int, char **, int index);
 int ls_metho(int argc, char **argv, char **,
 	int (*f)(struct dirent *, char *, char**, char **));
-int e_alert(char *, char **, char **h_permi,
+int e_alert(char *, char **,
 	int (*f)(struct dirent *, char *, char**, char **));
 int error_option(char *option_tag_ls);
 int ls_basic(struct dirent *read,
@@ -56,11 +56,11 @@ int choose_value_start(int argc,
 int add_name_dir(char *d_f_name, char **ls_complet_message);
 int add_list_f_d(char *d_f_name, char **ls_complet_message);
 int mul_name(int argc, int s_num, int i, char **argv, char **ls_c, int f_s_c);
-int print_list_ls(char **ls_complete_message, char **is_file, char **h_permi);
+int print_list_ls(char **ls_complete_message, char **is_file);
 int ls_1_flg(struct dirent *read,
 	char *directory_to_show_ls, char **ls_c_mes, char **);
 int ls_1_flag_m_generetor(char *d_f_name, char **ls_complet_message);
-int _str_cmp(char *s1, char *s2);
+int _strcmp(char *s1, char *s2);
 int get_options(char **argv, int i_argv, char **, tag_option *);
 int ls_a_flg(struct dirent *read,
 	char *directory_to_show_ls, char **ls_c_mes, char **);
