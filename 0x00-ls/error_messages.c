@@ -1,6 +1,48 @@
 #include "headerls.h"
 
 /**
+  * create_error_denied - create a custom error message permision denied
+  * @d_ls: pointer with the name of the directory
+  * @h_permi: all no open directory permission denied
+  * Return: 0 on sucess
+  */
+int create_error_denied(char *d_ls, char **h_permi)
+{
+	char cannot_open_directory_message[] = "hls: cannot open directory ";
+	char permission_denied[] = ": Permission denied";
+	char *error_ls_message = NULL, *t_mes = NULL, *add_p_denied = NULL;
+
+	error_ls_message = cannot_open_directory_message;
+	t_mes = concat_two_strings(d_ls, error_ls_message);
+	add_p_denied = concat_two_strings(permission_denied, t_mes);
+	ls_1_flag_m_generetor(add_p_denied, h_permi);
+	free_memory_messages(t_mes);
+	free_memory_messages(add_p_denied);
+	return (0);
+}
+
+/**
+  * create_file_list - create list of files
+  * @d_ls: pointer with the name of the directory
+  * @i_f: get the file that no was open because are file
+  * @f: function pointer with the right function to use
+  * Return: 0 on sucess
+  */
+int create_file_list(char *d_ls, char **i_f,
+	int (*f)(struct dirent *, char *, char **, char **))
+{
+	if (f == ls_basic)
+		ls_message_generator(d_ls, i_f);
+	else if (f == ls_1_flg)
+		ls_1_flag_m_generetor(d_ls, i_f);
+	else if (f == ls_a_flg || f == ls_A_flg)
+		ls_message_generator(d_ls, i_f);
+	else if (f == ls_l_flg)
+		ls_1_flag_m_generetor(d_ls, i_f);
+	return (0);
+}
+
+/**
   * e_alert - create a custom error message with perror
   * @d_ls: pointer with the name of the directory
   * @i_f: get the file that no was open because are file
@@ -12,10 +54,7 @@ int e_alert(char *d_ls, char **i_f, char **h_permi,
 	int (*f)(struct dirent *, char *, char **, char **))
 {
 	char cannot_access_message[] = "hls: cannot access ";
-	char cannot_open_directory_message[] = "hls: cannot open directory ";
-	char permission_denied[] = ": Permission denied";
 	char dir_no_exis[] = ": No such file or directory", *ugo_permision = NULL;
-	char *error_ls_message = NULL, *t_mes = NULL, *add_p_denied = NULL;
 	struct stat buffer = {0};
 	int exist_file = 0;
 
@@ -25,25 +64,13 @@ int e_alert(char *d_ls, char **i_f, char **h_permi,
 		ugo_permision = get_ugo_permisions(&buffer);
 		if (ugo_permision[0] != '-' && ugo_permision[1] == '-')
 		{
-			error_ls_message = cannot_open_directory_message;
-			t_mes = concat_two_strings(d_ls, error_ls_message);
-			add_p_denied = concat_two_strings(permission_denied, t_mes);
-			ls_1_flag_m_generetor(add_p_denied, h_permi);
-			free_memory_messages(t_mes);
-			free_memory_messages(add_p_denied);
+			create_error_denied(d_ls, h_permi);
 			free_memory_messages(ugo_permision);
 			return (2);
 		}
 		else if (ugo_permision[0] == '-')
 		{
-			if (f == ls_basic)
-				ls_message_generator(d_ls, i_f);
-			else if (f == ls_1_flg)
-				ls_1_flag_m_generetor(d_ls, i_f);
-			else if (f == ls_a_flg || f == ls_A_flg)
-				ls_message_generator(d_ls, i_f);
-			else if (f == ls_l_flg)
-				ls_1_flag_m_generetor(d_ls, i_f);
+			create_file_list(d_ls, i_f, f);
 			free_memory_messages(ugo_permision);
 			return (0);
 		}

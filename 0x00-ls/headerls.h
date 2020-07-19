@@ -74,5 +74,8 @@ tag_option *all_hls_opt(void);
 char *get_more_info_dir(struct dirent *read, char *directory_to_show_ls);
 char *paste_options(char *ugo_permision, char *user_id, char *group_id,
 	long size_f_or_d, char *time, char *d_name);
+int create_error_denied(char *d_ls, char **h_permi);
+int create_file_list(char *d_ls, char **i_f,
+	int (*f)(struct dirent *, char *, char **, char **));
 
 #endif
