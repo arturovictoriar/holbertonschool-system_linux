@@ -145,18 +145,12 @@ char *get_proper_option_dir(int argc, char **argv, int index)
 		if (index + 1 == argc)
 		{
 			for (index_op = 0; index_op < argc; index_op++)
-				if (!_str_cmp("--", argv[index_op]) ||
-					!_str_cmp("-1", argv[index_op]) ||
-					!_str_cmp("-a", argv[index_op]) ||
-					!_str_cmp("-A", argv[index_op]))
+				if (argv[index_op][0] == '-')
 					count_ops++;
 			if (argc - count_ops <= 1)
 				return (home);
 		}
-		if (!(_str_cmp("-1", argv[index])) ||
-			!(_str_cmp("--", argv[index])) ||
-			!(_str_cmp("-a", argv[index])) ||
-			!(_str_cmp("-A", argv[index])))
+		if (argv[index][0] == '-')
 			return (NULL);
 		directory_to_show_ls = argv[index];
 	}
