@@ -31,12 +31,22 @@ char *paste_options(char *ugo_permision, char *user_id, char *group_id,
 		c6++;
 	}
 
-	c_total = 5 + c1 + c2 + c3 + c4 + c5 + c6 + 1;
+	c_total = 5 + c1 + c2 + c3 + c4 + c5 + c6 + 2;
 	complete_line = malloc(sizeof(char) * c_total);
 	sprintf(complete_line, "%s %s %s %ld %s %s",
 		ugo_permision, user_id, group_id, size_f_or_d, time, d_name);
 
 	return (complete_line);
+}
+
+int free_opt_ls_l(struct dirent *read, char *file_or_directory,
+	char *ugo_permision, char *time)
+{
+	free_memory_messages(time);
+	free_memory_messages(ugo_permision);
+	if (read)
+		free_memory_messages(file_or_directory);
+	return (0);
 }
 
 /**
@@ -49,19 +59,26 @@ char *get_more_info_dir(struct dirent *read, char *directory_to_show_ls)
 {
 	struct stat buffer = {0};
 	char *file_or_directory = NULL, *d_name_d = NULL, *ugo_permision = NULL;
-	char *time = NULL, *user_id = NULL, *group_id = NULL;
-	char *complete_line = NULL;
+	char *time = NULL, *user_id = NULL, *group_id = NULL, *complet_line = NULL;
 	long size_f_or_d = 0;
 
-	d_name_d = add_bar_diagonal_end(read->d_name);
-	if (!d_name_d)
-		error_malloc();
-	file_or_directory = concat_two_strings(d_name_d, directory_to_show_ls);
-	if (!file_or_directory)
-		error_malloc();
-	free_memory_messages(d_name_d);
+	if (read)
+	{
+		d_name_d = add_bar_diagonal_end(read->d_name);
+		if (!d_name_d)
+			error_malloc();
+		file_or_directory = concat_two_strings(d_name_d, directory_to_show_ls);
+		if (!file_or_directory)
+			error_malloc();
+		free_memory_messages(d_name_d);
+	}
+	else
+		file_or_directory = directory_to_show_ls;
 	if (extra_info_ls(file_or_directory, &buffer))
+	{
+		free_memory_messages(file_or_directory);
 		return (NULL);
+	}
 	ugo_permision = get_ugo_permisions(&buffer);
 	if (!ugo_permision)
 		error_malloc();
@@ -71,10 +88,12 @@ char *get_more_info_dir(struct dirent *read, char *directory_to_show_ls)
 	size_f_or_d = get_size_file_directory(&buffer);
 	user_id = get_user_id_file_directory(&buffer);
 	group_id = get_group_id_file_directory(&buffer);
-	complete_line = paste_options(ugo_permision, user_id, group_id,
-		size_f_or_d, time, read->d_name);
-	free_memory_messages(time);
-	free_memory_messages(ugo_permision);
-	free_memory_messages(file_or_directory);
-	return (complete_line);
+	if (read)
+		complet_line = paste_options(ugo_permision, user_id, group_id,
+			size_f_or_d, time, read->d_name);
+	else
+		complet_line = paste_options(ugo_permision, user_id, group_id,
+			size_f_or_d, time, directory_to_show_ls);
+	free_opt_ls_l(read, file_or_directory, ugo_permision, time);
+	return (complet_line);
 }

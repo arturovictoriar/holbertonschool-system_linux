@@ -31,6 +31,8 @@ int create_error_denied(char *d_ls, char **h_permi)
 int create_file_list(char *d_ls, char **i_f,
 	int (*f)(struct dirent *, char *, char **, char **))
 {
+	char *line_l_op = NULL;
+
 	if (f == ls_basic)
 		ls_message_generator(d_ls, i_f);
 	else if (f == ls_1_flg)
@@ -38,7 +40,14 @@ int create_file_list(char *d_ls, char **i_f,
 	else if (f == ls_a_flg || f == ls_A_flg)
 		ls_message_generator(d_ls, i_f);
 	else if (f == ls_l_flg)
-		ls_1_flag_m_generetor(d_ls, i_f);
+	{
+		line_l_op = get_more_info_dir(NULL, d_ls);
+		if (line_l_op)
+		{
+			ls_1_flag_m_generetor(line_l_op, i_f);
+			free_memory_messages(line_l_op);
+		}
+	}
 	return (0);
 }
 

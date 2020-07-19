@@ -77,5 +77,7 @@ char *paste_options(char *ugo_permision, char *user_id, char *group_id,
 int create_error_denied(char *d_ls, char **h_permi);
 int create_file_list(char *d_ls, char **i_f,
 	int (*f)(struct dirent *, char *, char **, char **));
+int free_opt_ls_l(struct dirent *read, char *file_or_directory,
+	char *ugo_permision, char *time);
 
 #endif
