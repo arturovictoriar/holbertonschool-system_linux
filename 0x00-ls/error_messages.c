@@ -36,18 +36,17 @@ int e_alert(char *d_ls, char **i_f, char **h_permi,
 			ls_1_flag_m_generetor(d_ls, i_f);
 		else if (f == ls_a_flg || f == ls_A_flg)
 			ls_message_generator(d_ls, i_f);
+		else if (f == ls_l_flg)
+			ls_1_flag_m_generetor(d_ls, i_f);
 		return (0);
 	default:
 		error_ls_message = cannot_open_directory_message;
 		break;
 	}
 	error_message = concat_two_strings(d_ls, error_ls_message);
-
 	if (!error_message)
 		error_malloc();
-
 	perror(error_message);
-
 	free_memory_messages(error_message);
 	return (errno);
 }

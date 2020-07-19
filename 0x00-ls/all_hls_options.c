@@ -11,6 +11,7 @@ tag_option *all_hls_opt(void)
 		{"1", ls_1_flg},
 		{"a", ls_a_flg},
 		{"A", ls_A_flg},
+		{"l", ls_l_flg},
 		{NULL, NULL},
 	};
 	return (choose);

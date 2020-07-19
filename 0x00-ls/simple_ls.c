@@ -1,4 +1,3 @@
-
 #include "headerls.h"
 
 /**
@@ -40,52 +39,26 @@ int ls_1_flg(struct dirent *read, char *directory_to_show_ls,
 }
 
 /**
-  * ls_options - list the directory o file given in argv with options
+  * ls_l_flg - list the directory o file given in argv with options
   * @read: string with the name of the file listed
   * @directory_to_show_ls: string with the name of the directory list
   * @ls_c_me: ls complete message
   * @option_tag_ls: all option selected
   * Return: nothing
   */
-int ls_options(struct dirent *read, char *directory_to_show_ls,
+int ls_l_flg(struct dirent *read, char *directory_to_show_ls,
 	char **ls_c_me, char **option_tag_ls)
 {
-	struct stat buffer = {0};
-	char *file_or_directory = NULL, *d_name_d = NULL, *ugo_permision = NULL;
-	char *time = NULL, *user_id = NULL, *group_id = NULL;
-	long size_f_or_d = 0;
-	(void) ls_c_me;
+	char *dir_all_opt = NULL;
+	int ret_func = 0;
 	(void) option_tag_ls;
 
-	d_name_d = add_bar_diagonal_end(read->d_name);
-	if (!d_name_d)
-		error_malloc();
-
-	file_or_directory = concat_two_strings(d_name_d, directory_to_show_ls);
-	if (!file_or_directory)
-		error_malloc();
-
-	free_memory_messages(d_name_d);
-	if (extra_info_ls(file_or_directory, &buffer))
-		return (errno);
-
-	ugo_permision = get_ugo_permisions(&buffer);
-	if (!ugo_permision)
-		error_malloc();
-
-	time = get_time_file_directory(&buffer);
-	if (!time)
-		error_malloc();
-
-	size_f_or_d = get_size_file_directory(&buffer);
-	user_id = get_user_id_file_directory(&buffer);
-	group_id = get_group_id_file_directory(&buffer);
-	printf("%s %s %s %ld %s %s\n",
-		ugo_permision, user_id, group_id, size_f_or_d, time, read->d_name);
-	free_memory_messages(time);
-	free_memory_messages(ugo_permision);
-	free_memory_messages(file_or_directory);
-	return (errno);
+	if (read->d_name[0] == '.')
+		return (0);
+	dir_all_opt = get_more_info_dir(read, directory_to_show_ls);
+	ret_func = ls_1_flag_m_generetor(dir_all_opt, ls_c_me);
+	free_memory_messages(dir_all_opt);
+	return (ret_func);
 }
 
 /**

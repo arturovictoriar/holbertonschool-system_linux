@@ -47,7 +47,7 @@ int e_alert(char *, char **, char **h_permi,
 int error_option(char *option_tag_ls);
 int ls_basic(struct dirent *read,
 	char *directory_to_show_ls, char **ls_c_ms, char **);
-int ls_options(struct dirent *read,
+int ls_l_flg(struct dirent *read,
 	char *directory_to_show_ls, char **ls_c_, char **);
 int (*check_options_ok(int argc, char **argv, char **))();
 int ls_message_generator(char *d_f_name, char **ls_complet_message);
@@ -72,5 +72,8 @@ int print_all_output(char **is_file, char **h_permi,
 int ls_A_flg(struct dirent *read, char *directory_to_show_ls,
 	char **ls_c_mes, char **option_tag_ls);
 tag_option *all_hls_opt(void);
+char *get_more_info_dir(struct dirent *read, char *directory_to_show_ls);
+char *paste_options(char *ugo_permision, char *user_id, char *group_id,
+	long size_f_or_d, char *time, char *d_name);
 
 #endif
