@@ -92,16 +92,16 @@ int ls_options(struct dirent *read, char *directory_to_show_ls,
   * ls_metho - list the directory o file given in argv
   * @argc: has the length of the arguments
   * @argv: has the arguments
-  * @option_tag_ls: all option selected
+  * @o_ls: all option selected
   * @f: function pointer with the right function to use
   * Return: 0 to indicate a good working of the program otherwise errno value
   */
-int ls_metho(int argc, char **argv, char **option_tag_ls,
+int ls_metho(int argc, char **argv, char **o_ls,
 	int (*f)(struct dirent *, char *, char **, char **))
 {
 	DIR *dir = NULL;
 	struct dirent *read = NULL;
-	char *directory_to_show_ls = NULL, *ls_complete_message = NULL;
+	char *directory_to_show_ls = NULL, *ls_c_m = NULL;
 	char *temp_message = NULL, *is_file = NULL, *h_permi = NULL;
 	int f_s_c = 1, index = 0, start_num = 0, error_flag = 0, e_flag1 = 0;
 
@@ -117,14 +117,14 @@ int ls_metho(int argc, char **argv, char **option_tag_ls,
 		dir = opendir(directory_to_show_ls);
 		if (dir)
 		{
-			mul_name(argc, start_num, index, argv, &ls_complete_message, f_s_c);
+			mul_name(argc, start_num, index, argv, &ls_c_m, f_s_c);
 			while ((read = readdir(dir)) != NULL)
 			{
-				f(read, directory_to_show_ls, &temp_message, option_tag_ls);
+				f(read, directory_to_show_ls, &temp_message, o_ls);
 			}
 			if (temp_message)
 			{
-				add_list_f_d(temp_message, &ls_complete_message);
+				add_list_f_d(temp_message, &ls_c_m);
 				free_memory_messages(temp_message);
 			}
 			closedir(dir);
@@ -133,10 +133,9 @@ int ls_metho(int argc, char **argv, char **option_tag_ls,
 			if (!e_flag1)
 				e_flag1 = e_alert(directory_to_show_ls, &is_file, &h_permi, f);
 			else
-				e_alert(directory_to_show_ls, &is_file, &h_permi, f);			
+				e_alert(directory_to_show_ls, &is_file, &h_permi, f);
 	}
-	error_flag = print_all_output(&is_file, &h_permi,
-		&ls_complete_message, option_tag_ls, e_flag1);
+	error_flag = print_all_output(&is_file, &h_permi, &ls_c_m, o_ls, e_flag1);
 	if (error_flag)
 		return (error_flag);
 	return (errno);

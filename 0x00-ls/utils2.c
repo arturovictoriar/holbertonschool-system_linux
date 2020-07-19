@@ -6,6 +6,7 @@
   * @is_file: pointer with the file could no open because are file
   * @h_permi: all file no have permission
   * @option_tag_ls: all option selected
+  * @error_flag1: file or directory no found error
   * Return: errno or 2
   */
 int print_all_output(char **is_file, char **h_permi,
