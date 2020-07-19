@@ -7,7 +7,7 @@
   * @h_permi: all file no have permission
   * @option_tag_ls: all option selected
   * @error_flag1: file or directory no found error
-  * Return: errno or 2
+  * Return: 0 on success otherwise 2
   */
 int print_all_output(char **is_file, char **h_permi,
 	char **ls_complete_message, char **option_tag_ls, int error_flag1)
@@ -20,7 +20,5 @@ int print_all_output(char **is_file, char **h_permi,
 		print_list_ls(ls_complete_message, is_file, h_permi);
 	if (*option_tag_ls)
 		free_memory_messages(*option_tag_ls);
-	if (error_flag)
-		return (error_flag);
-	return (errno);
+	return (error_flag);
 }

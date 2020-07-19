@@ -14,42 +14,43 @@ int e_alert(char *d_ls, char **i_f, char **h_permi,
 	char cannot_access_message[] = "hls: cannot access ";
 	char cannot_open_directory_message[] = "hls: cannot open directory ";
 	char permission_denied[] = ": Permission denied";
+	char dir_no_exis[] = ": No such file or directory", *ugo_permision = NULL;
 	char *error_ls_message = NULL, *t_mes = NULL, *add_p_denied = NULL;
-	char *error_message = NULL;
+	struct stat buffer = {0};
+	int exist_file = 0;
 
-	switch (errno)
+	exist_file = extra_info_ls(d_ls, &buffer);
+	if (!exist_file)
 	{
-	case EACCES:
-		error_ls_message = cannot_open_directory_message;
-		t_mes = concat_two_strings(d_ls, error_ls_message);
-		add_p_denied = concat_two_strings(permission_denied, t_mes);
-		ls_1_flag_m_generetor(add_p_denied, h_permi);
-		free_memory_messages(t_mes);
-		free_memory_messages(add_p_denied);
-		return (2);
-	case ENOENT:
-		error_ls_message = cannot_access_message;
-		break;
-	case ENOTDIR:
-		if (f == ls_basic)
-			ls_message_generator(d_ls, i_f);
-		else if (f == ls_1_flg)
-			ls_1_flag_m_generetor(d_ls, i_f);
-		else if (f == ls_a_flg || f == ls_A_flg)
-			ls_message_generator(d_ls, i_f);
-		else if (f == ls_l_flg)
-			ls_1_flag_m_generetor(d_ls, i_f);
-		return (0);
-	default:
-		error_ls_message = cannot_open_directory_message;
-		break;
+		ugo_permision = get_ugo_permisions(&buffer);
+		if (ugo_permision[0] != '-' && ugo_permision[1] == '-')
+		{
+			error_ls_message = cannot_open_directory_message;
+			t_mes = concat_two_strings(d_ls, error_ls_message);
+			add_p_denied = concat_two_strings(permission_denied, t_mes);
+			ls_1_flag_m_generetor(add_p_denied, h_permi);
+			free_memory_messages(t_mes);
+			free_memory_messages(add_p_denied);
+			free_memory_messages(ugo_permision);
+			return (2);
+		}
+		else if (ugo_permision[0] == '-')
+		{
+			if (f == ls_basic)
+				ls_message_generator(d_ls, i_f);
+			else if (f == ls_1_flg)
+				ls_1_flag_m_generetor(d_ls, i_f);
+			else if (f == ls_a_flg || f == ls_A_flg)
+				ls_message_generator(d_ls, i_f);
+			else if (f == ls_l_flg)
+				ls_1_flag_m_generetor(d_ls, i_f);
+			free_memory_messages(ugo_permision);
+			return (0);
+		}
 	}
-	error_message = concat_two_strings(d_ls, error_ls_message);
-	if (!error_message)
-		error_malloc();
-	perror(error_message);
-	free_memory_messages(error_message);
-	return (errno);
+	fprintf(stderr, "%s%s%s\n", cannot_access_message, d_ls,
+		dir_no_exis);
+	return (2);
 }
 
 /**
@@ -58,8 +59,8 @@ int e_alert(char *d_ls, char **i_f, char **h_permi,
   */
 void error_malloc(void)
 {
-	perror("Malloc error");
-	exit(errno);
+	fprintf(stderr, "Malloc error");
+	exit(1);
 }
 
 /**

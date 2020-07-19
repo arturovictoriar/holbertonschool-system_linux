@@ -64,8 +64,5 @@ int extra_info_ls(char *file_directory_to_show_state, struct stat *buffer)
 	}
 
 	status = lstat(file_directory_to_show_state, buffer);
-	if (status == -1)
-		perror("Error");
-
-	return (errno);
+	return (status);
 }

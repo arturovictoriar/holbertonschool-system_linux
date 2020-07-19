@@ -67,7 +67,7 @@ int ls_l_flg(struct dirent *read, char *directory_to_show_ls,
   * @argv: has the arguments
   * @o_ls: all option selected
   * @f: function pointer with the right function to use
-  * Return: 0 to indicate a good working of the program otherwise errno value
+  * Return: 0 to indicate a good working of the program otherwise a number
   */
 int ls_metho(int argc, char **argv, char **o_ls,
 	int (*f)(struct dirent *, char *, char **, char **))
@@ -109,9 +109,7 @@ int ls_metho(int argc, char **argv, char **o_ls,
 				e_alert(directory_to_show_ls, &is_file, &h_permi, f);
 	}
 	error_flag = print_all_output(&is_file, &h_permi, &ls_c_m, o_ls, e_flag1);
-	if (error_flag)
-		return (error_flag);
-	return (errno);
+	return (error_flag);
 }
 
 /**
@@ -129,18 +127,9 @@ int main(int argc, char **argv)
 	/* Check if exist the tag name*/
 	function = check_options_ok(argc, argv, &option_tag_ls);
 	if (function)
-	{
-		/* Call ls funciontion*/
 		end_status = ls_metho(argc, argv, &option_tag_ls, function);
-		if (!end_status)
-			return (end_status);
-	}
 	else
 		end_status = error_option(option_tag_ls);
 
-	if (end_status == 20)
-		return (0);
-	if (end_status > 2)
-		end_status = 2;
 	return (end_status);
 }
