@@ -92,6 +92,10 @@ int (*check_options_ok(int argc, char **argv, char **option_tag_ls))()
 					return (NULL);
 			}
 		}
+		if (*option_tag_ls)
+			for (i_argv = 1; choose[i_argv].option != NULL; i_argv++)
+				if (choose[i_argv].option[0] == *option_tag_ls[0])
+					func = i_argv;
 		if (flag_opt)
 			return (choose[func].function);
 	}
