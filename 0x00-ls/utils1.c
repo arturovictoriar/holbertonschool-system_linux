@@ -1,12 +1,12 @@
 #include "headerls.h"
 
 /**
- * _str_cmp - compare 2 string.
+ * _strcmp - compare 2 string.
  * @s1: is a pointer type char
  * @s2: is a pointer type char
  * Return: 0 on success otherwise other value.
  */
-int _str_cmp(char *s1, char *s2)
+int _strcmp(char *s1, char *s2)
 {
 	int result = -1, i = 0;
 

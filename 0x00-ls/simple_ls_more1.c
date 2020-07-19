@@ -31,7 +31,7 @@ int ls_A_flg(struct dirent *read, char *directory_to_show_ls,
 	(void) directory_to_show_ls;
 	(void) option_tag_ls;
 
-	if (!_str_cmp(read->d_name, ".") || !_str_cmp(read->d_name, ".."))
+	if (!_strcmp(read->d_name, ".") || !_strcmp(read->d_name, ".."))
 		return (0);
 	return (ls_message_generator(read->d_name, ls_c_mes));
 }

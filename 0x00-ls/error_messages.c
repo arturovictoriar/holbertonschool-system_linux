@@ -5,7 +5,7 @@
   * @d_ls: pointer with the name of the directory
   * @i_f: get the file that no was open because are file
   * @f: function pointer with the right function to use
-  * @h_permi: all file no have permission
+  * @h_permi: all no open directory permission denied
   * Return: erron value or 1 if malloc fails
   */
 int e_alert(char *d_ls, char **i_f, char **h_permi,
@@ -13,8 +13,9 @@ int e_alert(char *d_ls, char **i_f, char **h_permi,
 {
 	char cannot_access_message[] = "hls: cannot access ";
 	char cannot_open_directory_message[] = "hls: cannot open directory ";
-	char permission_denied[] = ": Permission denied", *add_p_denied = NULL;
-	char *error_ls_message = NULL, *error_message = NULL, *t_mes = NULL;
+	char permission_denied[] = ": Permission denied";
+	char *error_ls_message = NULL, *t_mes = NULL, *add_p_denied = NULL;
+	char *error_message = NULL;
 
 	switch (errno)
 	{
