@@ -33,8 +33,18 @@ char *paste_options(char *ugo_permision, char *user_id, char *group_id,
 
 	c_total = 5 + c1 + c2 + c3 + c4 + c5 + c6 + 2;
 	complete_line = malloc(sizeof(char) * c_total);
-	sprintf(complete_line, "%s %s %s %ld %s %s",
-		ugo_permision, user_id, group_id, size_f_or_d, time, d_name);
+	if (user_id && !group_id)
+		sprintf(complete_line, "%s %s %ld %s %s",
+			ugo_permision, user_id, size_f_or_d, time, d_name);
+	else if (!user_id && group_id)
+		sprintf(complete_line, "%s %s %ld %s %s",
+			ugo_permision, group_id, size_f_or_d, time, d_name);
+	else if (!user_id && !group_id)
+		sprintf(complete_line, "%s %ld %s %s",
+			ugo_permision, size_f_or_d, time, d_name);
+	else
+		sprintf(complete_line, "%s %s %s %ld %s %s",
+			ugo_permision, user_id, group_id, size_f_or_d, time, d_name);
 
 	return (complete_line);
 }
