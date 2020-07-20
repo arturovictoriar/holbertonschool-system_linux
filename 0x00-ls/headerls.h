@@ -79,5 +79,7 @@ int create_file_list(char *d_ls, char **i_f,
 	int (*f)(struct dirent *, char *, char **, char **));
 int free_opt_ls_l(struct dirent *read, char *file_or_directory,
 	char *ugo_permision, char *time);
+int _strcmp_real(char *s2, char *s1);
+int order_argv(char **argv);
 
 #endif

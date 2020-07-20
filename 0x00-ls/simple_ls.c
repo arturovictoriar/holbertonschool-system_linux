@@ -124,6 +124,7 @@ int main(int argc, char **argv)
 	int end_status = 0;
 	int (*function)(struct dirent *, char *, char **, char **) = NULL;
 
+	order_argv(argv);
 	/* Check if exist the tag name*/
 	function = check_options_ok(argc, argv, &option_tag_ls);
 	if (function)
