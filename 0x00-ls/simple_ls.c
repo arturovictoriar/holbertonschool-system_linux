@@ -128,7 +128,7 @@ int main(int argc, char **argv)
 	function = check_options_ok(argc, argv, &option_tag_ls);
 	if (function)
 	{
-		order_argv(argv);
+		/*order_argv(argv);*/
 		end_status = ls_metho(argc, argv, &option_tag_ls, function);
 	}
 	else
