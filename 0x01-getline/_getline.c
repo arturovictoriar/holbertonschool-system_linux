@@ -158,29 +158,20 @@ int set_new_line(char **all_text_fd, int **all_fds, char **all_buff_fd,
 	char *new_mes = NULL;
 	int len_message = 0;
 
-	if (!all_text_fd[fd_pos])
-	{
-		new_mes = malloc(sizeof(char) * (i_buff - l_jum + 1));
-		if (!new_mes)
-			return (1);
-		strncpy(new_mes, &(b[l_jum]), (i_buff - l_jum));
-		new_mes[i_buff - l_jum] = '\0';
-		all_text_fd[fd_pos] = new_mes;
-	}
-	else
-	{
+	if (all_text_fd[fd_pos])
 		for (len_message = 0; all_text_fd[fd_pos][len_message] != '\0';
 			len_message++)
 			continue;
-		new_mes = malloc(sizeof(char) * (len_message + i_buff - l_jum + 1));
-		if (!new_mes)
-			return (1);
+	new_mes = malloc(sizeof(char) * (len_message + i_buff - l_jum + 1));
+	if (!new_mes)
+		return (1);
+	if (all_text_fd[fd_pos])
 		strcpy(new_mes, all_text_fd[fd_pos]);
-		strncpy(&(new_mes[len_message]), &(b[l_jum]), (i_buff - l_jum));
-		new_mes[len_message + i_buff - l_jum] = '\0';
+	strncpy(&(new_mes[len_message]), &(b[l_jum]), (i_buff - l_jum));
+	new_mes[len_message + i_buff - l_jum] = '\0';
+	if (all_text_fd[fd_pos])
 		free(all_text_fd[fd_pos]);
-		all_text_fd[fd_pos] = new_mes;
-	}
+	all_text_fd[fd_pos] = new_mes;
 	if (i_buff + 1 >= r)
 	{
 		if (all_buff_fd[fd_pos])
@@ -197,6 +188,36 @@ int set_new_line(char **all_text_fd, int **all_fds, char **all_buff_fd,
 }
 
 /**
+ * set_new_line - entry point.
+ * @all_text_fd: All lines for all fds
+ * @all_fds: All fds
+ * @all_buff_fd: All buffer for all fds
+ * @fd_pos: Position in the array of the fd
+ * @b: buffer
+ * @start: index where start the line
+ * @stop: total of char of the buffer
+ * Return: always 0.
+ */
+int read_buffer(char **all_text_fd, int **all_fds, char **all_buff_fd,
+	int fd_pos, char *b, int start, int stop)
+{
+	int i_buff = 0;
+
+	for (i_buff = start; i_buff < stop; i_buff++)
+	{
+		if (b[i_buff] == '\n')
+		{
+			set_new_line(all_text_fd, all_fds, all_buff_fd, fd_pos, b,
+				start, i_buff, stop);
+			return (1);
+		}
+	}
+	set_new_line(all_text_fd, all_fds, all_buff_fd, fd_pos, b, start, i_buff,
+		stop);
+	return (0);
+}
+
+/**
  * _getline - entry point.
  * @fd: file descriptor id
  * Return: a string pointer on succes otherwise NULL.
@@ -205,7 +226,7 @@ char *_getline(const int fd)
 {
 	static char **all_text_fd, **all_buff_fd;
 	static int **all_fds, num_fds;
-	int fd_pos = -1, r = 0, i_buff = 0, index = 0;
+	int fd_pos = -1, r = 0, index = 0;
 	char *b = NULL;
 
 	if (fd == -1)
@@ -221,38 +242,21 @@ char *_getline(const int fd)
 		return (NULL);
 	if (all_buff_fd[fd_pos])
 	{
-		b = all_buff_fd[fd_pos];
-		r = all_fds[fd_pos][2];
 		all_text_fd[fd_pos] = NULL;
-		for (i_buff = all_fds[fd_pos][1]; i_buff < all_fds[fd_pos][2];
-			i_buff++)
-		{
-			if (b[i_buff] == '\n')
-			{
-				set_new_line(all_text_fd, all_fds, all_buff_fd, fd_pos, b,
-					all_fds[fd_pos][1], i_buff, r);
-				return (all_text_fd[fd_pos]);
-			}
-		}
-		set_new_line(all_text_fd, all_fds, all_buff_fd, fd_pos, b,
-			all_fds[fd_pos][1], i_buff, r);
+		index = read_buffer(all_text_fd, all_fds, all_buff_fd, fd_pos,
+			all_buff_fd[fd_pos], all_fds[fd_pos][1], all_fds[fd_pos][2]);
+		if (index)
+			return (all_text_fd[fd_pos]);
 	}
 	b = malloc(sizeof(char) * (READ_SIZE));
 	if (!b)
-		return (NULL);
+		return (0);
 	for (r = read(fd, b, READ_SIZE); r > 0; r = read(fd, b, READ_SIZE))
 	{
-		for (i_buff = 0; i_buff < r; i_buff++)
-		{
-			if (b[i_buff] == '\n')
-			{
-				set_new_line(all_text_fd, all_fds, all_buff_fd, fd_pos, b,
-					0, i_buff, r);
-				return (all_text_fd[fd_pos]);
-			}
-		}
-		set_new_line(all_text_fd, all_fds, all_buff_fd, fd_pos, b, 0, i_buff,
-			r);
+		index = read_buffer(all_text_fd, all_fds, all_buff_fd, fd_pos,
+			b, 0, r);
+		if (index)
+			return (all_text_fd[fd_pos]);
 	}
 	free(b);
 	return (NULL);
