@@ -8,17 +8,15 @@
  * @num_fds: Numbers of fds
  * Return: always -1.
  */
-int free_static_var(char ***all_text_read_fd, int ***all_fds,
+char *free_static_var(char ***all_text_read_fd, int ***all_fds,
 	char ***all_buff_fd, int *num_fds)
 {
 	int index = 0;
 
 	if (!(*all_text_read_fd) && !(*all_fds) && !(*all_buff_fd) && !(*num_fds))
-		return (-1);
+		return (NULL);
 	for (index = 0; index < *num_fds; index++)
 	{
-		free((*all_text_read_fd)[index]);
-		(*all_text_read_fd)[index] = NULL;
 		free((*all_fds)[index]);
 		(*all_fds)[index] = NULL;
 		free((*all_buff_fd)[index]);
@@ -32,7 +30,7 @@ int free_static_var(char ***all_text_read_fd, int ***all_fds,
 	*all_buff_fd = NULL;
 
 	*num_fds = 0;
-	return (-1);
+	return (NULL);
 }
 
 /**
@@ -101,13 +99,8 @@ int realloc_all_text_fd(char ***all_text_fd, int ***all_fds,
 int num_fds_realloc(char ***all_text_fd, int ***all_fds, char ***all_buff_fd,
 	int *num_fds, int fd)
 {
-	int *new_fd_num = NULL, index = 0;
+	int *new_fd_num = NULL;
 
-	if (fd == -1)
-		return (free_static_var(all_text_fd, all_fds, all_buff_fd, num_fds));
-	for (index = 0; index < *num_fds; index++)
-		if ((*all_fds)[index][0] == fd)
-			return (index);
 	if (!(*num_fds))
 	{
 		(*all_text_fd) = malloc(sizeof(char *) * 1);
@@ -195,15 +188,10 @@ int set_new_line(char **all_text_fd, int **all_fds, char **all_buff_fd,
 			free(all_buff_fd[fd_pos]);
 			all_buff_fd[fd_pos] = NULL;
 		}
-		all_fds[fd_pos][1] = 0;
-		all_fds[fd_pos][2] = 0;
 		return (0);
 	}
-	if (!all_buff_fd[fd_pos])
-	{
-		all_buff_fd[fd_pos] = b;
-		all_fds[fd_pos][2] = r;
-	}
+	all_buff_fd[fd_pos] = b;
+	all_fds[fd_pos][2] = r;
 	all_fds[fd_pos][1] = i_buff + 1;
 	return (0);
 }
@@ -217,11 +205,18 @@ char *_getline(const int fd)
 {
 	static char **all_text_fd, **all_buff_fd;
 	static int **all_fds, num_fds;
-	int fd_pos = -1, r = 0, i_buff = 0;
+	int fd_pos = -1, r = 0, i_buff = 0, index = 0;
 	char *b = NULL;
 
-	fd_pos = num_fds_realloc(&all_text_fd, &all_fds, &all_buff_fd, &num_fds,
-		(int) fd);
+	if (fd == -1)
+		return (free_static_var(&all_text_fd, &all_fds, &all_buff_fd,
+			&num_fds));
+	for (index = 0; index < num_fds; index++)
+		if (all_fds[index][0] == fd)
+			fd_pos = index;
+	if (fd_pos == -1)
+		fd_pos = num_fds_realloc(&all_text_fd, &all_fds, &all_buff_fd,
+			&num_fds, (int) fd);
 	if (fd_pos == -1)
 		return (NULL);
 	if (all_buff_fd[fd_pos])
