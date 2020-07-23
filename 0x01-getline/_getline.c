@@ -212,8 +212,10 @@ int read_buffer(char **all_text_fd, int **all_fds, char **all_buff_fd,
 			return (1);
 		}
 	}
-	set_new_line(all_text_fd, all_fds, all_buff_fd, fd_pos, b, start, i_buff,
-		stop);
+	set_new_line(all_text_fd, all_fds, all_buff_fd, fd_pos, b, start,
+		i_buff, stop);
+	if (i_buff == stop && start < stop && stop != READ_SIZE)
+		return (1);
 	return (0);
 }
 
