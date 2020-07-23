@@ -78,7 +78,7 @@ void race_state(int *id, size_t size)
 		num_cars = 0;
 		return;
 	}
-	order_id(id, size);
+	/*order_id(id, size);*/
 	for (index = 0; index < size; index++)
 	{
 		flag = 1;
