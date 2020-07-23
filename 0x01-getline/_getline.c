@@ -159,9 +159,7 @@ int set_new_line(char **all_text_fd, int **all_fds, char **all_buff_fd,
 	int len_message = 0;
 
 	if (all_text_fd[fd_pos])
-		for (len_message = 0; all_text_fd[fd_pos][len_message] != '\0';
-			len_message++)
-			continue;
+		len_message = READ_SIZE;
 	new_mes = malloc(sizeof(char) * (len_message + i_buff - l_jum + 1));
 	if (!new_mes)
 		return (1);
