@@ -207,8 +207,6 @@ int read_buffer(char **all_text_fd, int **all_fds, char **all_buff_fd,
 	{
 		if (b[i_buff] == '\n')
 		{
-			if (stop == 1)
-				return (0);
 			set_new_line(all_text_fd, all_fds, all_buff_fd, fd_pos, b,
 				start, i_buff, stop);
 			return (1);
