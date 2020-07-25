@@ -258,7 +258,11 @@ char *_getline(const int fd)
 		index = read_buffer(all_text_fd, all_fds, all_buff_fd, fd_pos,
 			b, 0, r);
 		if (index)
+		{
+			if (!all_buff_fd[fd_pos])
+				free(b);
 			return (all_text_fd[fd_pos]);
+		}
 	}
 	free(b);
 	return (NULL);
