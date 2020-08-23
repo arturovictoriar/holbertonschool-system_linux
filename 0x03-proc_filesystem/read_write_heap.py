@@ -69,7 +69,7 @@ def main():
                 break
 
             mem_file.seek(start + index_search_s)
-            mem_file.write(bytes(replace_s, 'utf-8'))
+            mem_file.write(bytes(replace_s, 'utf-8') + b'\x00')
             break
 
     maps_file.close()
