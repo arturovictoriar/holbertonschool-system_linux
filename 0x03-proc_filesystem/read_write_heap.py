@@ -42,15 +42,15 @@ def main():
 
     try:
         maps_file = open("/proc/{}/maps".format(f_pid), 'r')
-    except:
-        print("{} no found active".format(f_pid))
+    except Exception as e:
+        print(e)
         exit(1)
 
     try:
         mem_file = open("/proc/{}/mem".format(f_pid), 'r+b', 0)
-    except:
+    except Exception as e:
         maps_file.close()
-        print("{} no found active".format(f_pid))
+        print(e)
         exit(1)
 
     heap_found = False
