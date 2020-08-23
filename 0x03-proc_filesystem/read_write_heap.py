@@ -37,9 +37,8 @@ def main():
     replace_s = sys.argv[3]
 
     if len(replace_s) > len(search_s):
-        replace_s = ''
-        for index in range(len(search_s)):
-            replace_s += sys.argv[3][index]
+        print("It can not replace, length replace > length search")
+        exit(1)
 
     try:
         maps_file = open("/proc/{}/maps".format(f_pid), 'r')
