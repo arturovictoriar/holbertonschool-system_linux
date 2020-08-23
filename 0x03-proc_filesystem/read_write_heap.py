@@ -36,6 +36,11 @@ def main():
     search_s = sys.argv[2]
     replace_s = sys.argv[3]
 
+    if len(replace_s) > len(search_s):
+        replace_s = ''
+        for index in range(len(search_s)):
+            replace_s += sys.argv[3][index]
+
     try:
         maps_file = open("/proc/{}/maps".format(f_pid), 'r')
     except:
