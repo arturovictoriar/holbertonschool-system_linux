@@ -37,7 +37,7 @@ def main():
     replace_s = sys.argv[3]
 
     if len(replace_s) > len(search_s):
-        print("Usage: read_write_heap.py pid search_string replace_string")
+        print("Length string of the replace can not be greater than search")
         exit(1)
 
     try:
