@@ -107,6 +107,9 @@ int print_e_version(elf_struct_headers elf_headers)
 	case EV_CURRENT:
 		printf("0x%lx\n", (unsigned long)elf_headers.e_64.e_version);
 		break;
+	default:
+		printf("UNKNOWN\n");
+		break;
 	}
 
 	return (0);

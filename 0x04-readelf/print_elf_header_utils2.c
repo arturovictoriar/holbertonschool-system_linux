@@ -109,6 +109,9 @@ int print_e_type(elf_struct_headers elf_headers)
 	case ET_CORE:
 		printf("CORE (Core file)\n");
 		break;
+	default:
+		printf("UNKNOWN\n");
+		break;
 	}
 
 	return (0);
