@@ -41,5 +41,6 @@ int main(int ac, char **av)
 	}
 
 	print_elf_header(elf_headers);
+	close(fd);
 	return (0);
 }
