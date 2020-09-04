@@ -42,7 +42,8 @@ int main(int ac, char **av)
 		exit(1);
 	}
 
-	handle_arqui_endi_file(&elf_headers, fd, av);
+	handle_arquitec(&elf_headers, fd, av);
+	handle_data_format(&elf_headers);
 	print_elf_header(elf_headers);
 
 	close(fd);

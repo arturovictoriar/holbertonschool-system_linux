@@ -37,7 +37,23 @@ typedef struct elf_ESP_header
 /*utils_elf_1*/
 int is_elf(Elf64_Ehdr e_64);
 int is_64(Elf64_Ehdr e_64);
-int handle_arqui_endi_file(elf_struct_headers *elf_headers, int fd, char **av);
+int is_little_endian(Elf64_Ehdr e_64);
+int handle_arquitec(elf_struct_headers *elf_headers, int fd, char **av);
+int handle_data_format(elf_struct_headers *elf_headers);
+
+/*#####################Convert data format#################*/
+
+/*convert_endian_1*/
+int convert_little_to_big_end_64(elf_struct_headers *elf_headers);
+int convert_little_to_big_end_32(elf_struct_headers *elf_headers);
+uint16_t little_big_uint16_t(uint16_t x);
+
+/*convert_endian_2*/
+uint32_t little_big_uint32_t(uint32_t x);
+Elf64_Addr little_big_Elf64_Addr(Elf64_Addr x);
+Elf64_Off little_big_Elf64_Off(Elf64_Off x);
+Elf32_Addr little_big_Elf32_Addr(Elf32_Addr x);
+Elf32_Off little_big_Elf32_Off(Elf32_Off x);
 
 /*#####################ELF File header#####################*/
 
