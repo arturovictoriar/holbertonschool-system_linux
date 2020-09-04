@@ -57,7 +57,7 @@ int print_e_ident(Elf64_Ehdr e_64)
 
 	printf("  Magic:   ");
 	for (i = 0; i < EI_NIDENT; i++)
-		printf("%02x ", e_64.e_ident[i]);
+		printf("%.2x ", e_64.e_ident[i]);
 	printf("\n");
 
 	return (0);
@@ -82,6 +82,9 @@ int print_e_class(Elf64_Ehdr e_64)
 	case ELFCLASS64:
 		printf("ELF64\n");
 		break;
+	default:
+		printf("UNKNOWN\n");
+		break;
 	}
 
 	return (0);
@@ -105,6 +108,9 @@ int print_e_data(Elf64_Ehdr e_64)
 		break;
 	case ELFDATA2MSB:
 		printf("2's complement, big-endian\n");
+		break;
+	default:
+		printf("UNKNOWN\n");
 		break;
 	}
 

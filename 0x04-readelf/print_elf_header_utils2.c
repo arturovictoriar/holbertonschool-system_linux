@@ -35,25 +35,25 @@ int print_e_osabi(Elf64_Ehdr e_64)
 		printf("UNIX - System V\n");
 		break;
 	case ELFOSABI_HPUX:
-		printf("HP-UX\n");
+		printf("UNIX - HP-UX\n");
 		break;
 	case ELFOSABI_NETBSD:
-		printf("NetBSD\n");
+		printf("UNIX - NetBSD\n");
 		break;
 	case ELFOSABI_LINUX:
-		printf("Linux\n");
+		printf("UNIX - Linux\n");
 		break;
 	case ELFOSABI_SOLARIS:
-		printf("Solaris\n");
+		printf("UNIX - Solaris\n");
 		break;
 	case ELFOSABI_IRIX:
-		printf("IRIX\n");
+		printf("UNIX - IRIX\n");
 		break;
 	case ELFOSABI_FREEBSD:
-		printf("FreeBSD\n");
+		printf("UNIX - FreeBSD\n");
 		break;
 	case ELFOSABI_TRU64:
-		printf("TRU64 UNIX\n");
+		printf("UNIX - TRU64\n");
 		break;
 	case ELFOSABI_ARM:
 		printf("ARM architecture\n");

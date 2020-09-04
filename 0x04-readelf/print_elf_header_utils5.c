@@ -21,7 +21,7 @@ int print_e_shentsize(Elf64_Ehdr e_64)
 int print_e_shnum(Elf64_Ehdr e_64)
 {
 	printf("  Number of section headers:         ");
-	printf("%lu\n", (unsigned long)e_64.e_shnum);
+	printf("%ld\n", (long)e_64.e_shnum);
 
 	return (0);
 }
@@ -34,7 +34,7 @@ int print_e_shnum(Elf64_Ehdr e_64)
 int print_e_shstrndx(Elf64_Ehdr e_64)
 {
 	printf("  Section header string table index: ");
-	printf("%lu\n", (unsigned long)e_64.e_shstrndx);
+	printf("%ld\n", (long)e_64.e_shstrndx);
 
 	return (0);
 }

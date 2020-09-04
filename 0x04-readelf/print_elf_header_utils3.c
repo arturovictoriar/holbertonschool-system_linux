@@ -40,11 +40,9 @@ int print_e_machine(Elf64_Ehdr e_64)
 	case EM_SPARC32PLUS:
 		printf("SPARC with enhanced instruction set\n");
 		break;
-	case EM_PPC:
-		printf("PowerPC\n");
-		break;
 	default:
 		print_e_machine_1(e_64);
+		break;
 	}
 	return (0);
 }
@@ -58,6 +56,9 @@ int print_e_machine_1(Elf64_Ehdr e_64)
 {
 	switch (e_64.e_machine)
 	{
+	case EM_PPC:
+		printf("PowerPC\n");
+		break;
 	case EM_PPC64:
 		printf("PowerPC 64-bit\n");
 		break;
@@ -82,6 +83,9 @@ int print_e_machine_1(Elf64_Ehdr e_64)
 	case EM_VAX:
 		printf("DEC Vax\n");
 		break;
+	default:
+		printf("UNKNOWN\n");
+		break;
 	}
 
 	return (0);
@@ -101,8 +105,7 @@ int print_e_version(Elf64_Ehdr e_64)
 		printf("Invalid\n");
 		break;
 	case EV_CURRENT:
-		printf("0x%x\n",
-			   e_64.e_version);
+		printf("0x%lx\n", (unsigned long)e_64.e_version);
 		break;
 	}
 
@@ -117,7 +120,7 @@ int print_e_version(Elf64_Ehdr e_64)
 int print_e_entry(Elf64_Ehdr e_64)
 {
 	printf("  Entry point address:               ");
-	printf("%p\n", (void *)e_64.e_entry);
+	printf("0x%lx\n", e_64.e_entry);
 
 	return (0);
 }

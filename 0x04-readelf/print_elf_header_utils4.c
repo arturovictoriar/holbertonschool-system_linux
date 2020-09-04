@@ -21,7 +21,7 @@ int print_e_shoff(Elf64_Ehdr e_64)
 int print_e_flags(Elf64_Ehdr e_64)
 {
 	printf("  Flags:                             ");
-	printf("0x%x\n", e_64.e_flags);
+	printf("0x%lx\n", (unsigned long)e_64.e_flags);
 
 	return (0);
 }
@@ -34,7 +34,7 @@ int print_e_flags(Elf64_Ehdr e_64)
 int print_e_ehsize(Elf64_Ehdr e_64)
 {
 	printf("  Size of this header:               ");
-	printf("%lu (bytes)\n", (unsigned long)e_64.e_ehsize);
+	printf("%ld (bytes)\n", (long)e_64.e_ehsize);
 
 	return (0);
 }
@@ -47,7 +47,7 @@ int print_e_ehsize(Elf64_Ehdr e_64)
 int print_e_phentsize(Elf64_Ehdr e_64)
 {
 	printf("  Size of program headers:           ");
-	printf("%lu (bytes)\n", (unsigned long)e_64.e_phentsize);
+	printf("%ld (bytes)\n", (long)e_64.e_phentsize);
 
 	return (0);
 }
@@ -60,7 +60,7 @@ int print_e_phentsize(Elf64_Ehdr e_64)
 int print_e_phnum(Elf64_Ehdr e_64)
 {
 	printf("  Number of program headers:         ");
-	printf("%lu\n", (unsigned long)e_64.e_phnum);
+	printf("%ld\n", (long)e_64.e_phnum);
 
 	return (0);
 }
