@@ -2,19 +2,19 @@
 
 /**
 * print_e_version_d - Print elf version decimal number
-* @e_64: Elf headers 64 bit
+* @elf_headers: Elf headers 64 bit
 * Return: 0 on success, 1 otherwise
 */
-int print_e_version_d(Elf64_Ehdr e_64)
+int print_e_version_d(elf_struct_headers elf_headers)
 {
 	printf("  Version:                           ");
-	switch (e_64.e_ident[EI_VERSION])
+	switch (elf_headers.e_64.e_ident[EI_VERSION])
 	{
 	case EV_NONE:
 		printf("Invalid\n");
 		break;
 	case EV_CURRENT:
-		printf("%x (current)\n", e_64.e_ident[EI_VERSION]);
+		printf("%x (current)\n", elf_headers.e_64.e_ident[EI_VERSION]);
 		break;
 	}
 
@@ -23,13 +23,13 @@ int print_e_version_d(Elf64_Ehdr e_64)
 
 /**
 * print_e_osabi - Print elf osabi
-* @e_64: Elf headers 64 bit
+* @elf_headers: Elf headers 64 bit
 * Return: 0 on success, 1 otherwise
 */
-int print_e_osabi(Elf64_Ehdr e_64)
+int print_e_osabi(elf_struct_headers elf_headers)
 {
 	printf("  OS/ABI:                            ");
-	switch (e_64.e_ident[EI_OSABI])
+	switch (elf_headers.e_64.e_ident[EI_OSABI])
 	{
 	case ELFOSABI_SYSV:
 		printf("UNIX - System V\n");
@@ -68,16 +68,16 @@ int print_e_osabi(Elf64_Ehdr e_64)
 
 /**
 * print_e_abiversion - Print elf osabi version
-* @e_64: Elf headers 64 bit
+* @elf_headers: Elf headers 64 bit
 * Return: 0 on success, 1 otherwise
 */
-int print_e_abiversion(Elf64_Ehdr e_64)
+int print_e_abiversion(elf_struct_headers elf_headers)
 {
-	switch (e_64.e_ident[EI_ABIVERSION])
+	switch (elf_headers.e_64.e_ident[EI_ABIVERSION])
 	{
 	case 0x00:
 		printf("  ABI Version:                       %d\n",
-			   e_64.e_ident[EI_ABIVERSION]);
+			   elf_headers.e_64.e_ident[EI_ABIVERSION]);
 		break;
 	}
 
@@ -86,13 +86,13 @@ int print_e_abiversion(Elf64_Ehdr e_64)
 
 /**
 * print_e_type - Print elf type
-* @e_64: Elf headers 64 bit
+* @elf_headers: Elf headers 64 bit
 * Return: 0 on success, 1 otherwise
 */
-int print_e_type(Elf64_Ehdr e_64)
+int print_e_type(elf_struct_headers elf_headers)
 {
 	printf("  Type:                              ");
-	switch (e_64.e_type)
+	switch (elf_headers.e_64.e_type)
 	{
 	case ET_NONE:
 		printf("NONE (Unknown type)\n");

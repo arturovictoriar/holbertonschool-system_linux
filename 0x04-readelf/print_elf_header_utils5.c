@@ -2,39 +2,48 @@
 
 /**
 * print_e_shentsize - Print elf shentsize
-* @e_64: Elf headers 64 bit
+* @elf_headers: Elf headers 64 bit
 * Return: 0 on success, 1 otherwise
 */
-int print_e_shentsize(Elf64_Ehdr e_64)
+int print_e_shentsize(elf_struct_headers elf_headers)
 {
 	printf("  Size of section headers:           ");
-	printf("%lu (bytes)\n", (unsigned long)e_64.e_shentsize);
+	if (is_64(elf_headers.e_64))
+		printf("%lu (bytes)\n", (unsigned long)elf_headers.e_64.e_shentsize);
+	else
+		printf("%lu (bytes)\n", (unsigned long)elf_headers.e_32.e_shentsize);
 
 	return (0);
 }
 
 /**
 * print_e_shnum - Print elf shnum
-* @e_64: Elf headers 64 bit
+* @elf_headers: Elf headers 64 bit
 * Return: 0 on success, 1 otherwise
 */
-int print_e_shnum(Elf64_Ehdr e_64)
+int print_e_shnum(elf_struct_headers elf_headers)
 {
 	printf("  Number of section headers:         ");
-	printf("%ld\n", (long)e_64.e_shnum);
+	if (is_64(elf_headers.e_64))
+		printf("%ld\n", (long)elf_headers.e_64.e_shnum);
+	else
+		printf("%ld\n", (long)elf_headers.e_32.e_shnum);
 
 	return (0);
 }
 
 /**
 * print_e_shstrndx - Print elf shstrndx
-* @e_64: Elf headers 64 bit
+* @elf_headers: Elf headers 64 bit
 * Return: 0 on success, 1 otherwise
 */
-int print_e_shstrndx(Elf64_Ehdr e_64)
+int print_e_shstrndx(elf_struct_headers elf_headers)
 {
 	printf("  Section header string table index: ");
-	printf("%ld\n", (long)e_64.e_shstrndx);
+	if (is_64(elf_headers.e_64))
+		printf("%ld\n", (long)elf_headers.e_64.e_shstrndx);
+	else
+		printf("%ld\n", (long)elf_headers.e_32.e_shstrndx);
 
 	return (0);
 }

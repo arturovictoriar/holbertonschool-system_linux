@@ -1,5 +1,7 @@
 #include "header_elf.h"
 
+
+
 /**
 * main - Print the elf header
 * @ac: number of argument
@@ -34,13 +36,15 @@ int main(int ac, char **av)
 
 	read_lines = read(fd, &elf_headers.e_64, sizeof(elf_headers.e_64));
 	/*Check if it is a elf file*/
-	if (read_lines != sizeof(elf_headers.e_64) || !is_elf(elf_headers.e_64))
+	if (sizeof(elf_headers.e_64) != read_lines || !is_elf(elf_headers.e_64))
 	{
 		fprintf(stderr, ERR_NOT_ELF, av[0]);
 		exit(1);
 	}
 
+	handle_arqui_endi_file(&elf_headers, fd, av);
 	print_elf_header(elf_headers);
+
 	close(fd);
 	return (0);
 }

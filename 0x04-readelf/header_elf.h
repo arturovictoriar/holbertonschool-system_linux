@@ -32,29 +32,45 @@ typedef struct elf_ESP_header
 	Elf32_Ehdr e_32;
 } elf_struct_headers;
 
-/*ELF File header*/
+/*#####################Utils####################*/
+
+/*utils_elf_1*/
 int is_elf(Elf64_Ehdr e_64);
+int is_64(Elf64_Ehdr e_64);
+int handle_arqui_endi_file(elf_struct_headers *elf_headers, int fd, char **av);
+
+/*#####################ELF File header#####################*/
+
+/*print_elf_header_utils1*/
 int print_elf_header(elf_struct_headers e_file_header);
-int print_e_ident(Elf64_Ehdr e_64);
-int print_e_class(Elf64_Ehdr e_64);
-int print_e_data(Elf64_Ehdr e_64);
-int print_e_version_d(Elf64_Ehdr e_64);
-int print_e_osabi(Elf64_Ehdr e_64);
-int print_e_abiversion(Elf64_Ehdr e_64);
-int print_e_type(Elf64_Ehdr e_64);
-int print_e_machine(Elf64_Ehdr e_64);
-int print_e_machine_1(Elf64_Ehdr e_64);
-int print_e_version(Elf64_Ehdr e_64);
-int print_e_entry(Elf64_Ehdr e_64);
-int print_e_phoff(Elf64_Ehdr e_64);
-int print_e_shoff(Elf64_Ehdr e_64);
-int print_e_flags(Elf64_Ehdr e_64);
-int print_e_ehsize(Elf64_Ehdr e_64);
-int print_e_phentsize(Elf64_Ehdr e_64);
-int print_e_phnum(Elf64_Ehdr e_64);
-int print_e_shentsize(Elf64_Ehdr e_64);
-int print_e_shnum(Elf64_Ehdr e_64);
-int print_e_shstrndx(Elf64_Ehdr e_64);
+int print_e_ident(elf_struct_headers e_file_header);
+int print_e_class(elf_struct_headers e_file_header);
+int print_e_data(elf_struct_headers e_file_header);
+
+/*print_elf_header_utils2*/
+int print_e_version_d(elf_struct_headers e_file_header);
+int print_e_osabi(elf_struct_headers e_file_header);
+int print_e_abiversion(elf_struct_headers e_file_header);
+int print_e_type(elf_struct_headers e_file_header);
+
+/*print_elf_header_utils3*/
+int print_e_machine(elf_struct_headers e_file_header);
+int print_e_machine_1(elf_struct_headers e_file_header);
+int print_e_version(elf_struct_headers e_file_header);
+int print_e_entry(elf_struct_headers e_file_header);
+int print_e_phoff(elf_struct_headers e_file_header);
+
+/*print_elf_header_utils4*/
+int print_e_shoff(elf_struct_headers e_file_header);
+int print_e_flags(elf_struct_headers e_file_header);
+int print_e_ehsize(elf_struct_headers e_file_header);
+int print_e_phentsize(elf_struct_headers e_file_header);
+int print_e_phnum(elf_struct_headers e_file_header);
+
+/*print_elf_header_utils5*/
+int print_e_shentsize(elf_struct_headers e_file_header);
+int print_e_shnum(elf_struct_headers e_file_header);
+int print_e_shstrndx(elf_struct_headers e_file_header);
 
 /*ELF Section header*/
 

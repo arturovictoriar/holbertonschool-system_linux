@@ -2,13 +2,13 @@
 
 /**
 * print_e_machine - Print elf machine
-* @e_64: Elf headers 64 bit
+* @elf_headers: Elf headers 64 bit
 * Return: 0 on success, 1 otherwise
 */
-int print_e_machine(Elf64_Ehdr e_64)
+int print_e_machine(elf_struct_headers elf_headers)
 {
 	printf("  Machine:                           ");
-	switch (e_64.e_machine)
+	switch (elf_headers.e_64.e_machine)
 	{
 	case EM_NONE:
 		printf("Unknown machine\n");
@@ -41,7 +41,7 @@ int print_e_machine(Elf64_Ehdr e_64)
 		printf("SPARC with enhanced instruction set\n");
 		break;
 	default:
-		print_e_machine_1(e_64);
+		print_e_machine_1(elf_headers);
 		break;
 	}
 	return (0);
@@ -49,12 +49,12 @@ int print_e_machine(Elf64_Ehdr e_64)
 
 /**
 * print_e_machine_1 - Print elf machine
-* @e_64: Elf headers 64 bit
+* @elf_headers: Elf headers 64 bit
 * Return: 0 on success, 1 otherwise
 */
-int print_e_machine_1(Elf64_Ehdr e_64)
+int print_e_machine_1(elf_struct_headers elf_headers)
 {
-	switch (e_64.e_machine)
+	switch (elf_headers.e_64.e_machine)
 	{
 	case EM_PPC:
 		printf("PowerPC\n");
@@ -93,19 +93,19 @@ int print_e_machine_1(Elf64_Ehdr e_64)
 
 /**
 * print_e_version - Print elf version
-* @e_64: Elf headers 64 bit
+* @elf_headers: Elf headers 64 bit
 * Return: 0 on success, 1 otherwise
 */
-int print_e_version(Elf64_Ehdr e_64)
+int print_e_version(elf_struct_headers elf_headers)
 {
 	printf("  Version:                           ");
-	switch (e_64.e_version)
+	switch (elf_headers.e_64.e_version)
 	{
 	case EV_NONE:
 		printf("Invalid\n");
 		break;
 	case EV_CURRENT:
-		printf("0x%lx\n", (unsigned long)e_64.e_version);
+		printf("0x%lx\n", (unsigned long)elf_headers.e_64.e_version);
 		break;
 	}
 
@@ -114,26 +114,37 @@ int print_e_version(Elf64_Ehdr e_64)
 
 /**
 * print_e_entry - Print elf entry
-* @e_64: Elf headers 64 bit
+* @elf_headers: Elf headers 64 bit
 * Return: 0 on success, 1 otherwise
 */
-int print_e_entry(Elf64_Ehdr e_64)
+int print_e_entry(elf_struct_headers elf_headers)
 {
 	printf("  Entry point address:               ");
-	printf("0x%lx\n", e_64.e_entry);
-
+	if (is_64(elf_headers.e_64))
+		printf("0x%lx\n", elf_headers.e_64.e_entry);
+	else
+		printf("0x%lx\n", (unsigned long)elf_headers.e_32.e_entry);
 	return (0);
 }
 
 /**
 * print_e_phoff - Print elf phoff
-* @e_64: Elf headers 64 bit
+* @elf_headers: Elf headers 64 bit
 * Return: 0 on success, 1 otherwise
 */
-int print_e_phoff(Elf64_Ehdr e_64)
+int print_e_phoff(elf_struct_headers elf_headers)
 {
 	printf("  Start of program headers:          ");
-	printf("%lu (bytes into file)\n", (unsigned long)e_64.e_phoff);
+	if (is_64(elf_headers.e_64))
+	{
+		printf("%lu (bytes into file)\n",
+			(unsigned long)elf_headers.e_64.e_phoff);
+	}
+	else
+	{
+		printf("%lu (bytes into file)\n",
+			(unsigned long)elf_headers.e_32.e_phoff);
+	}
 
 	return (0);
 }
