@@ -62,7 +62,7 @@ int print_e_osabi(elf_struct_headers elf_headers)
 		printf("Stand-alone (embedded)\n");
 		break;
 	default:
-		printf("<unknown: %.2x>", elf_headers.e_64.e_ident[EI_OSABI]);
+		printf("<unknown: %.2x>\n", elf_headers.e_64.e_ident[EI_OSABI]);
 		break;
 	}
 
