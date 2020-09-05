@@ -92,7 +92,7 @@ int print_e_data(elf_struct_headers elf_headers)
 		printf("2's complement, little endian\n");
 		break;
 	case ELFDATA2MSB:
-		printf("2's complement, big-endian\n");
+		printf("2's complement, big endian\n");
 		break;
 	default:
 		printf("UNKNOWN\n");

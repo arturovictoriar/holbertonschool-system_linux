@@ -17,7 +17,7 @@ int print_e_machine(elf_struct_headers elf_headers)
 		printf("AT&T WE 32100\n");
 		break;
 	case EM_SPARC:
-		printf("Sun Microsystems SPARC\n");
+		printf("Sparc\n");
 		break;
 	case EM_386:
 		printf("Intel 80386\n");
@@ -72,7 +72,7 @@ int print_e_machine_1(elf_struct_headers elf_headers)
 		printf("Renesas SuperH\n");
 		break;
 	case EM_SPARCV9:
-		printf("Sparc\n");
+		printf("SPARC v9 64-bit\n");
 		break;
 	case EM_IA_64:
 		printf("Intel Itanium\n");
