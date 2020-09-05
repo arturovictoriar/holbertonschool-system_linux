@@ -101,7 +101,7 @@ int print_e_type(elf_struct_headers elf_headers)
 		printf("EXEC (Executable file)\n");
 		break;
 	case ET_DYN:
-		printf("DYN (Shared object)\n");
+		printf("DYN (Shared object file)\n");
 		break;
 	case ET_CORE:
 		printf("CORE (Core file)\n");
