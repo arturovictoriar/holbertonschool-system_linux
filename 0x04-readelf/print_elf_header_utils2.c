@@ -73,14 +73,8 @@ int print_e_osabi(elf_struct_headers elf_headers)
 */
 int print_e_abiversion(elf_struct_headers elf_headers)
 {
-	switch (elf_headers.e_64.e_ident[EI_ABIVERSION])
-	{
-	case 0x00:
-		printf("  ABI Version:                       %d\n",
-			   elf_headers.e_64.e_ident[EI_ABIVERSION]);
-		break;
-	}
-
+	printf("  ABI Version:                       %d\n",
+		elf_headers.e_64.e_ident[EI_ABIVERSION]);
 	return (0);
 }
 
