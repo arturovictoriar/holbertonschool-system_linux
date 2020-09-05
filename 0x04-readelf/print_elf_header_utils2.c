@@ -61,6 +61,9 @@ int print_e_osabi(elf_struct_headers elf_headers)
 	case ELFOSABI_STANDALONE:
 		printf("Stand-alone (embedded)\n");
 		break;
+	default:
+		printf("<unknown: %.2x>", elf_headers.e_64.e_ident[EI_OSABI]);
+		break;
 	}
 
 	return (0);
