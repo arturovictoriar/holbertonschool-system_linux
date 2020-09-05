@@ -6,8 +6,8 @@ OBJDIR = targets/
 SRC1_1 = 0-hreadelf.c print_elf_header_utils1.c print_elf_header_utils2.c print_elf_header_utils3.c
 SRC1_2 = print_elf_header_utils4.c print_elf_header_utils5.c utils_elf_1.c convert_endian_1.c convert_endian_2.c
 SRC1 = $(SRC1_1) $(SRC1_2)
-SRC2 = 1-hreadelf.c
-SRC3 = 2-hreadelf.c
+SRC2 = 1-hreadelf.c utils_elf_1.c convert_endian_1.c convert_endian_2.c
+SRC3 = 2-hreadelf.c utils_elf_1.c convert_endian_1.c convert_endian_2.c
 OBJ1 = $(addprefix $(OBJDIR), $(SRC1:%.c=%.o))
 OBJ2 = $(addprefix $(OBJDIR), $(SRC2:%.c=%.o))
 OBJ3 = $(addprefix $(OBJDIR), $(SRC3:%.c=%.o))

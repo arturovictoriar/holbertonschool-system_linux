@@ -23,6 +23,8 @@
  * struct elf_ESP_header - Elf header
  * @e_64: elf struct for 64 bits arquitecture
  * @e_32: elf struct for 32 bits arquitecture
+ * @es_64: elf section struct for 64 bits arquitecture
+ * @es_32: elf section struct for 32 bits arquitecture
  *
  * Description: Structures for handle elf headers
  */
@@ -30,6 +32,8 @@ typedef struct elf_ESP_header
 {
 	Elf64_Ehdr e_64;
 	Elf32_Ehdr e_32;
+	Elf64_Shdr es_64;
+	Elf32_Shdr es_32;
 } elf_struct_headers;
 
 /*#####################Utils####################*/
@@ -54,6 +58,9 @@ Elf64_Addr little_big_Elf64_Addr(Elf64_Addr x);
 Elf64_Off little_big_Elf64_Off(Elf64_Off x);
 Elf32_Addr little_big_Elf32_Addr(Elf32_Addr x);
 Elf32_Off little_big_Elf32_Off(Elf32_Off x);
+
+/*#####################ELF Section header#####################*/
+/*int print_elf_section_header(elf_struct_headers *e_file_header, int fd);*/
 
 /*#####################ELF File header#####################*/
 
