@@ -66,7 +66,7 @@ int print_64_section(elf_struct_headers *elf_headers, int fd)
 	{
 		printf("  [%2u] %-17s %-15.15s %16.16lx %6.6lx",
 			   i,
-			   str_table + elf_headers->es_64[i].sh_name,
+			   &str_table[elf_headers->es_64[i].sh_name],
 			   get_elf_section_type_64(elf_headers, i),
 			   elf_headers->es_64[i].sh_addr,
 			   elf_headers->es_64[i].sh_offset);
@@ -100,7 +100,7 @@ int print_32_section(elf_struct_headers *elf_headers, int fd)
 	{
 		printf("  [%2u] %-17s %-15.15s %8.8lx %6.6lx",
 			   i,
-			   str_table + elf_headers->es_32[i].sh_name,
+			   &str_table[elf_headers->es_32[i].sh_name],
 			   get_elf_section_type_32(elf_headers, i),
 			   (unsigned long)elf_headers->es_32[i].sh_addr,
 			   (unsigned long)elf_headers->es_32[i].sh_offset);
