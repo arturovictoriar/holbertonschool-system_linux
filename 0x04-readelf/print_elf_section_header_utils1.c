@@ -173,6 +173,8 @@ char *get_elf_section_flag(elf_struct_headers *elf_headers, int i)
 			*str_cpy++ = 'S';
 		if (elf_headers->es_64[i].sh_flags & SHF_INFO_LINK)
 			*str_cpy++ = 'I';
+		if (elf_headers->es_64[i].sh_flags & SHF_EXCLUDE)
+			*str_cpy++ = 'E';
 	}
 	else
 	{
@@ -188,6 +190,8 @@ char *get_elf_section_flag(elf_struct_headers *elf_headers, int i)
 			*str_cpy++ = 'S';
 		if (elf_headers->es_32[i].sh_flags & SHF_INFO_LINK)
 			*str_cpy++ = 'I';
+		if (elf_headers->es_32[i].sh_flags & SHF_EXCLUDE)
+			*str_cpy++ = 'E';
 	}
 	*str_cpy = 0;
 	return (str);
