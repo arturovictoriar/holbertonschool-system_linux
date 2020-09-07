@@ -128,5 +128,5 @@ int print_e_shentsize(elf_struct_headers e_file_header);
 int print_e_shnum(elf_struct_headers e_file_header);
 int print_e_shstrndx(elf_struct_headers e_file_header);
 
-/*ELF Program header*/
+/*#####################ELF Program header##################*/
 #endif
