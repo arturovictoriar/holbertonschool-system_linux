@@ -42,8 +42,8 @@ int main(int ac, char **av)
 
 	handle_arquitec(&elf_headers, fd, av);
 	handle_data_format(&elf_headers);
-	/*print_elf_section_header(&elf_headers, fd);*/
-
+	print_elf_section_header(&elf_headers, fd);
+	clean_section_64_32(&elf_headers);
 	close(fd);
 	return (0);
 }
