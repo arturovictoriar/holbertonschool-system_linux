@@ -38,6 +38,10 @@ char *get_elf_section_type_64(elf_struct_headers *elf_headers, int i)
 		return ("INIT_ARRAY");
 	case SHT_FINI_ARRAY:
 		return ("FINI_ARRAY");
+	case SHT_GROUP:
+		return ("GROUP");
+	case SHT_SYMTAB_SHNDX:
+		return ("SYMTAB SECTION INDICIES");
 	default:
 		return (get_elf_section_type_64_1(elf_headers, i));
 	}
@@ -65,6 +69,20 @@ char *get_elf_section_type_64_1(elf_struct_headers *elf_headers, int i)
 		return ("VERNEED");
 	case SHT_GNU_versym:
 		return ("VERSYM");
+	case 0x6ffffff0:
+		return ("VERSYM");
+	case 0x6ffffffc:
+		return ("VERDEF");
+	case 0x7ffffffd:
+		return ("AUXILIARY");
+	case 0x7fffffff:
+		return ("FILTER");
+	case 0x6ffffff1:
+		return ("LOOS+ffffff1");
+	case 0x6ffffff3:
+		return ("LOOS+ffffff3");
+	case SHT_GNU_LIBLIST:
+		return ("GNU_LIBLIST");
 	default:
 		sprintf(str, "%08x: <unknown>",
 				elf_headers->es_64[i].sh_type);
@@ -111,6 +129,10 @@ char *get_elf_section_type_32(elf_struct_headers *elf_headers, int i)
 		return ("INIT_ARRAY");
 	case SHT_FINI_ARRAY:
 		return ("FINI_ARRAY");
+	case SHT_GROUP:
+		return ("GROUP");
+	case SHT_SYMTAB_SHNDX:
+		return ("SYMTAB SECTION INDICIES");
 	default:
 		return (get_elf_section_type_32_1(elf_headers, i));
 	}
@@ -138,6 +160,20 @@ char *get_elf_section_type_32_1(elf_struct_headers *elf_headers, int i)
 		return ("VERNEED");
 	case SHT_GNU_versym:
 		return ("VERSYM");
+	case 0x6ffffff0:
+		return ("VERSYM");
+	case 0x6ffffffc:
+		return ("VERDEF");
+	case 0x7ffffffd:
+		return ("AUXILIARY");
+	case 0x7fffffff:
+		return ("FILTER");
+	case 0x6ffffff1:
+		return ("LOOS+ffffff1");
+	case 0x6ffffff3:
+		return ("LOOS+ffffff3");
+	case SHT_GNU_LIBLIST:
+		return ("GNU_LIBLIST");
 	default:
 		sprintf(str, "%08x: <unknown>",
 				elf_headers->es_32[i].sh_type);
