@@ -60,6 +60,7 @@ int handle_program_header(elf_struct_headers *elf_headers, int fd);
 int clean_program_64_32(elf_struct_headers *elf_headers);
 int get_section_program_64_32(elf_struct_headers *elf_headers, unsigned int i,
 	unsigned int j);
+int handle_format_and_print_program(elf_struct_headers *elf_headers, int fd);
 
 /*#####################Convert data format#################*/
 

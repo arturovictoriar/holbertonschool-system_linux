@@ -8,12 +8,10 @@
 */
 int print_elf_program_header(elf_struct_headers *elf_headers, int fd)
 {
-	unsigned int i = 0;
-
 	if ((is_64(elf_headers->e_64) && !elf_headers->e_64.e_phnum) ||
 		(!is_64(elf_headers->e_64) && !elf_headers->e_32.e_phnum))
 	{
-		printf("No program in file\n");
+		printf("There are no program headers in this file.\n");
 		return (1);
 	}
 	print_program_type_entry(elf_headers);
@@ -26,28 +24,7 @@ int print_elf_program_header(elf_struct_headers *elf_headers, int fd)
 			   (unsigned long)elf_headers->e_32.e_phoff);
 	handle_program_header(elf_headers, fd);
 	handle_section_header(elf_headers, fd), printf("\nProgram Headers:\n");
-	if (is_64(elf_headers->e_64))
-	{
-		if (!is_little_endian(elf_headers->e_64))
-		{
-			for (i = 0; i < elf_headers->e_64.e_phnum; i++)
-				convert_little_to_big_end_64_program(elf_headers, i);
-			for (i = 0; i < elf_headers->e_64.e_shnum; i++)
-				convert_little_to_big_end_64_section(elf_headers, i);
-		}
-		print_64_program(elf_headers, fd);
-	}
-	else
-	{
-		if (!is_little_endian(elf_headers->e_64))
-		{
-			for (i = 0; i < elf_headers->e_32.e_phnum; i++)
-				convert_little_to_big_end_32_program(elf_headers, i);
-			for (i = 0; i < elf_headers->e_32.e_shnum; i++)
-				convert_little_to_big_end_32_section(elf_headers, i);
-		}
-		print_32_program(elf_headers, fd);
-	}
+	handle_format_and_print_program(elf_headers, fd);
 	print_segment_section(elf_headers, fd);
 	return (0);
 }

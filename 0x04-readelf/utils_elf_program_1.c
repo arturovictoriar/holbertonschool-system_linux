@@ -86,3 +86,38 @@ int get_section_program_64_32(elf_struct_headers *elf_headers, unsigned int i,
 
 	return (0);
 }
+
+/**
+* handle_format_and_print_program - change endianes and print program
+* @elf_headers: Elf headers
+* @fd: file descriptor
+* Return: 0 on success, 1 otherwise
+*/
+int handle_format_and_print_program(elf_struct_headers *elf_headers, int fd)
+{
+	unsigned int i = 0;
+
+	if (is_64(elf_headers->e_64))
+	{
+		if (!is_little_endian(elf_headers->e_64))
+		{
+			for (i = 0; i < elf_headers->e_64.e_phnum; i++)
+				convert_little_to_big_end_64_program(elf_headers, i);
+			for (i = 0; i < elf_headers->e_64.e_shnum; i++)
+				convert_little_to_big_end_64_section(elf_headers, i);
+		}
+		print_64_program(elf_headers, fd);
+	}
+	else
+	{
+		if (!is_little_endian(elf_headers->e_64))
+		{
+			for (i = 0; i < elf_headers->e_32.e_phnum; i++)
+				convert_little_to_big_end_32_program(elf_headers, i);
+			for (i = 0; i < elf_headers->e_32.e_shnum; i++)
+				convert_little_to_big_end_32_section(elf_headers, i);
+		}
+		print_32_program(elf_headers, fd);
+	}
+	return (0);
+}
