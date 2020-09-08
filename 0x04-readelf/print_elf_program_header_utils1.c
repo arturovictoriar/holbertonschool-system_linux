@@ -29,21 +29,23 @@ int print_elf_program_header(elf_struct_headers *elf_headers, int fd)
 	if (is_64(elf_headers->e_64))
 	{
 		if (!is_little_endian(elf_headers->e_64))
+		{
 			for (i = 0; i < elf_headers->e_64.e_phnum; i++)
-			{
 				convert_little_to_big_end_64_program(elf_headers, i);
+			for (i = 0; i < elf_headers->e_64.e_shnum; i++)
 				convert_little_to_big_end_64_section(elf_headers, i);
-			}
+		}
 		print_64_program(elf_headers, fd);
 	}
 	else
 	{
 		if (!is_little_endian(elf_headers->e_64))
+		{
 			for (i = 0; i < elf_headers->e_32.e_phnum; i++)
-			{
 				convert_little_to_big_end_32_program(elf_headers, i);
+			for (i = 0; i < elf_headers->e_32.e_shnum; i++)
 				convert_little_to_big_end_32_section(elf_headers, i);
-			}
+		}
 		print_32_program(elf_headers, fd);
 	}
 	print_segment_section(elf_headers, fd);
