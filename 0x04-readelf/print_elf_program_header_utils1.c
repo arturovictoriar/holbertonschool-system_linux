@@ -11,7 +11,7 @@ int print_elf_program_header(elf_struct_headers *elf_headers, int fd)
 	if ((is_64(elf_headers->e_64) && !elf_headers->e_64.e_phnum) ||
 		(!is_64(elf_headers->e_64) && !elf_headers->e_32.e_phnum))
 	{
-		printf("There are no program headers in this file.\n");
+		printf("\nThere are no program headers in this file.\n");
 		return (1);
 	}
 	print_program_type_entry(elf_headers);
