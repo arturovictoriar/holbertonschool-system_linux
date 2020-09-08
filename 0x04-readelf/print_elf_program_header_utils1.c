@@ -154,9 +154,8 @@ int print_32_program(elf_struct_headers *elf_headers, int fd)
 int print_segment_section(elf_struct_headers *elf_headers, int fd)
 {
 	unsigned int i = 0, j = 0;
-	char *str_table = NULL;
+	char *str_table = get_string_table(elf_headers, fd);
 
-	str_table = get_string_table(elf_headers, fd);
 	printf("\n Section to Segment mapping:\n  Segment Sections...\n");
 	if (is_64(elf_headers->e_64))
 	{
@@ -167,6 +166,10 @@ int print_segment_section(elf_struct_headers *elf_headers, int fd)
 			{
 				if (get_section_program_64_32(elf_headers, i, j))
 					printf("%s ", &str_table[elf_headers->es_64[j].sh_name]);
+				if (elf_headers->es_64[j].sh_addr >
+					(elf_headers->ep_64[i].p_vaddr +
+					elf_headers->ep_64[i].p_memsz))
+					break;
 			}
 			printf("\n");
 		}
@@ -180,6 +183,10 @@ int print_segment_section(elf_struct_headers *elf_headers, int fd)
 			{
 				if (get_section_program_64_32(elf_headers, i, j))
 					printf("%s ", &str_table[elf_headers->es_32[j].sh_name]);
+				if (elf_headers->es_32[j].sh_addr >
+					(elf_headers->ep_32[i].p_vaddr +
+					elf_headers->ep_32[i].p_memsz))
+					break;
 			}
 			printf("\n");
 		}
