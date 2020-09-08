@@ -17,7 +17,7 @@ int handle_section_header(elf_struct_headers *elf_headers, int fd)
 	if (is_64(elf_headers->e_64))
 	{
 		elf_headers->es_64 = calloc(shnum_64, shentsize_64);
-		if (elf_headers->ep_64)
+		if (!elf_headers->es_64)
 			exit(1);
 		lseek(fd, elf_headers->e_64.e_shoff, SEEK_SET);
 		read_size = read(fd, elf_headers->es_64, shnum_64 * shentsize_64);
@@ -27,7 +27,7 @@ int handle_section_header(elf_struct_headers *elf_headers, int fd)
 	else
 	{
 		elf_headers->es_32 = calloc(shnum_32, shentsize_32);
-		if (elf_headers->ep_32)
+		if (!elf_headers->es_32)
 			exit(1);
 		lseek(fd, elf_headers->e_32.e_shoff, SEEK_SET);
 		read_size = read(fd, elf_headers->es_32, shnum_32 * shentsize_32);

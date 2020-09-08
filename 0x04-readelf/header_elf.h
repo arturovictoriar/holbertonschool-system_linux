@@ -55,6 +55,12 @@ int handle_section_header(elf_struct_headers *elf_headers, int fd);
 int clean_section_64_32(elf_struct_headers *elf_headers);
 char *get_string_table(elf_struct_headers *elf_headers, int fd);
 
+/*utils_elf_program_1.c*/
+int handle_program_header(elf_struct_headers *elf_headers, int fd);
+int clean_program_64_32(elf_struct_headers *elf_headers);
+int get_section_program_64_32(elf_struct_headers *elf_headers, unsigned int i,
+	unsigned int j);
+
 /*#####################Convert data format#################*/
 
 /*convert_endian_1*/
@@ -129,4 +135,20 @@ int print_e_shnum(elf_struct_headers e_file_header);
 int print_e_shstrndx(elf_struct_headers e_file_header);
 
 /*#####################ELF Program header##################*/
+
+/*print_elf_program_header_utils1.c*/
+int print_elf_program_header(elf_struct_headers *elf_headers, int fd);
+int print_program_type_entry(elf_struct_headers *elf_headers);
+int print_64_program(elf_struct_headers *elf_headers, int fd);
+int print_32_program(elf_struct_headers *elf_headers, int fd);
+int print_segment_section(elf_struct_headers *elf_headers, int fd);
+
+/*print_elf_program_header_utils2.c*/
+char *get_elf_program_flag_64(elf_struct_headers *elf_headers, unsigned int i);
+char *get_elf_program_flag_32(elf_struct_headers *elf_headers, unsigned int i);
+char *get_elf_program_type_64(elf_struct_headers *elf_headers, unsigned int i);
+char *get_elf_program_type_32(elf_struct_headers *elf_headers, unsigned int i);
+int *get_segment_resides(elf_struct_headers *elf_headers, int fd,
+	unsigned int i, char **str);
+
 #endif

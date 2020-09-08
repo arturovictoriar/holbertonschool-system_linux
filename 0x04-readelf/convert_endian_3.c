@@ -86,8 +86,6 @@ int convert_little_to_big_end_32_program(elf_struct_headers *elf_h,
 	elf_h->ep_32[i].p_memsz = little_big_uint32_t(elf_h->ep_32[i].p_memsz);
 	elf_h->ep_32[i].p_flags = little_big_uint32_t(elf_h->ep_32[i].p_flags);
 	elf_h->ep_32[i].p_align = little_big_uint32_t(elf_h->ep_32[i].p_align);
-	if (!is_64(elf_h->e_64))
-		convert_little_to_big_end_32(elf_h);
 
 	return (0);
 }
