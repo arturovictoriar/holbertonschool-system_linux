@@ -6,7 +6,7 @@ iter1 dd 0		; iterator 1
 iter2 dd 0		; iterator 2
 arg_a dq 0		; argument 1
 arg_b dq 0		; argument 2
-r_pointer dq 0		; 
+r_pointer dq 0		; substring pointer
 
 section .bss
 
