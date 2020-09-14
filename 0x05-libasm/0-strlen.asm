@@ -26,4 +26,3 @@ count_c:			; for statement
 	mov rsp, rbp		; epilogue
 	pop rbp
 	ret			; return the len value
-

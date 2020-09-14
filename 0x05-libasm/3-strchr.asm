@@ -50,4 +50,3 @@ equ_c:				; if they are equal set the pointer to that byte
 	add rcx, r11		; add the index in memory from the first byte
 	mov rax, rcx		; set the pointer in return value
 	jmp end_c		; end program
-

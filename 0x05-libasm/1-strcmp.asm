@@ -64,4 +64,3 @@ end_c:
         mov rsp, rbp            ; epilogue
         pop rbp			; set back the previous value of rbp
         ret                     ; return the len value
-

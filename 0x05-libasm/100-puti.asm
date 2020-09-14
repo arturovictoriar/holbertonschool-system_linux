@@ -5,9 +5,9 @@ section .data
 section .bss
 
 section .text
-        global asm_strpbrk
+        global asm_puti
 
 ; string length funciton
-asm_strpbrk:
+asm_puti:
         nop
         ret
