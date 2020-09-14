@@ -65,7 +65,6 @@ end_c:
 	pop r13			; set back the previous value of r13
 	pop r12			; set back the previous value of r12
 	pop r11			; set back the previous value of r11
-	pop rdx			; set back the previous value of rdx
         pop rcx                 ; set the rcx register with its old value
         pop rbx                 ; set the rbx register with its old value
         mov rsp, rbp            ; epilogue
