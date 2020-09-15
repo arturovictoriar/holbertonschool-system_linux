@@ -29,6 +29,11 @@ asm_strstr:
 	mov r11, 0		; set to 0 the r11 register
 	mov r12, 0		; set to 0 the r12 register
 
+	mov rcx, 0
+	mov cl, [rsi]
+	cmp cl, 0x00
+	je ret_same
+
 count_c:			; start loop
 	inc dword [iter1]	; increment by 1 the iterator 1
 	mov r11d, [iter1]	; copy the iter value to r11
@@ -46,7 +51,8 @@ count_c:			; start loop
 	cmp bl, cl		; if not, compare the first arg byte with the second arg byte
 	je inc_arg_2		; if they are equal continue the comparison
 	mov r12, 0		; else set the comparison arg2 from begining
-	jne count_c		; and continue the loop
+	mov [iter2], r12d
+	jmp count_c		; and continue the loop
 
 next_c:				; else go out of loop
 	mov rax, 0		; set return value to 0
@@ -83,3 +89,7 @@ save_p:				; save the beginig of substring
 	inc r11			; set back the iterator 1
 	mov r12, 0		; set back the iterator 2
 	jmp inc_next		; come back to the function was call
+
+ret_same:			; if the char in arg2 is null
+	mov [r_pointer], rdi	; get the first byte of arg1
+	jmp equ_c		; return the program
