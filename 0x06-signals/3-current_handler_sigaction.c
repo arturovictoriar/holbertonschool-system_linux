@@ -9,7 +9,7 @@ void (*current_handler_sigaction(void))(int)
 {
 	struct sigaction old_action;
 
-	if(sigaction(SIGINT, NULL, &old_action) == -1)
+	if (sigaction(SIGINT, NULL, &old_action) == -1)
 		return (NULL);
 
 	return (old_action.sa_handler);
