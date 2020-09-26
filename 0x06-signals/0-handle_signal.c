@@ -8,6 +8,7 @@
 void int_signal(int signal_i)
 {
 	printf("Gotcha! [%d]\n", signal_i);
+	fflush(stdout);
 }
 
 
