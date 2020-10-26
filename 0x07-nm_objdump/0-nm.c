@@ -59,7 +59,8 @@ int main(int ac, char **av)
 
 	for (i = 1; av[i]; i++)
 	{
-		printf("\n%s:\n", av[i]);
+		if (ac > 2)
+			printf("\n%s:\n", av[i]);
 		_hnm(av[0], av[i]);
 	}
 
