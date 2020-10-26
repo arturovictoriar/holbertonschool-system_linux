@@ -8,6 +8,7 @@
 void int_signal(int signal_i)
 {
 	printf("Gotcha! [%d]\n", signal_i);
+	fflush(stdout);
 }
 
 
@@ -17,8 +18,7 @@ void int_signal(int signal_i)
 */
 int handle_signal(void)
 {
-	signal(SIGINT, int_signal);
-	if (errno)
+	if (signal(SIGINT, int_signal) == SIG_ERR)
 		return (-1);
 	return (0);
 }
