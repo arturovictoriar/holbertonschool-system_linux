@@ -74,10 +74,10 @@ int handle_data_format(elf_struct_headers *elf_headers)
 * handle_arquitec - Check is 32-64 bits, l_endian-b_endian, all files
 * @elf_headers: Elf headers 64 bit
 * @fd: file descriptor
-* @av: arguments
+* @prg: arguments
 * Return: 0 on 32 bits, 1 on 64 bits
 */
-int handle_arquitec(elf_struct_headers *elf_headers, int fd, char **av)
+int handle_arquitec(elf_struct_headers *elf_headers, int fd, char *prg)
 {
 	int read_lines = 0;
 
@@ -88,7 +88,7 @@ int handle_arquitec(elf_struct_headers *elf_headers, int fd, char **av)
 	/*Check if it is a elf file*/
 	if (sizeof(elf_headers->e_32) != read_lines)
 	{
-		fprintf(stderr, ERR_NOT_ELF, av[0]);
+		fprintf(stderr, ERR_NOT_ELF, prg);
 		exit(1);
 	}
 	return (1);

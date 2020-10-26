@@ -51,7 +51,7 @@ typedef struct elf_ESP_header
 int is_elf(Elf64_Ehdr e_64);
 int is_64(Elf64_Ehdr e_64);
 int is_little_endian(Elf64_Ehdr e_64);
-int handle_arquitec(elf_struct_headers *elf_headers, int fd, char **av);
+int handle_arquitec(elf_struct_headers *elf_headers, int fd, char *prg);
 int handle_data_format(elf_struct_headers *elf_headers);
 
 /*utils_elf_section_1.c*/

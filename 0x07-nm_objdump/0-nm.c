@@ -1,34 +1,26 @@
 #include "header_elf.h"
 
 /**
-* main - Print the elf header
-* @ac: number of argument
-* @av: array of arguments
+* _hnm - Print a symbol table
+* @prg: program name
+* @file_name: file name
 * Return: 0 on success, a different number otherwise
 */
-int main(int ac, char **av)
+int _hnm(char *prg, char *file_name)
 {
 	elf_struct_headers elf_headers;
-	char *file_name = NULL;
 	int fd = 0, read_lines = 0;
-
-	if (ac != 2)
-	{
-		fprintf(stderr, ERR_USAGE);
-		exit(1);
-	}
 
 	/*Clean the elf variable to 0*/
 	memset(&elf_headers, 0, sizeof(elf_headers));
-	file_name = av[1];
 	/*Open the posible elf file*/
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
 	{
 		if (errno == ENOENT)
-			fprintf(stderr, ERR_FILE_NOT_FOUND, av[0], file_name);
+			fprintf(stderr, ERR_FILE_NOT_FOUND, prg, file_name);
 		else if (errno == EACCES)
-			fprintf(stderr, ERR_NOT_READ, av[0], file_name);
+			fprintf(stderr, ERR_NOT_READ, prg, file_name);
 		exit(1);
 	}
 
@@ -36,14 +28,40 @@ int main(int ac, char **av)
 	/*Check if it is a elf file*/
 	if (sizeof(elf_headers.e_64) != read_lines || !is_elf(elf_headers.e_64))
 	{
-		fprintf(stderr, ERR_NOT_ELF, av[0]);
+		fprintf(stderr, ERR_NOT_ELF, prg);
 		exit(1);
 	}
 
-	handle_arquitec(&elf_headers, fd, av);
+	handle_arquitec(&elf_headers, fd, prg);
 	handle_data_format(&elf_headers);
-	print_elf_symbol_header(&elf_headers, fd);
+	if (print_elf_symbol_header(&elf_headers, fd))
+		fprintf(stderr, "%s: %s: no symbols\n", prg, file_name);
 	clean_section_64_32(&elf_headers);
 	close(fd);
+	return (0);
+}
+
+/**
+* main - Print the symbol tables
+* @ac: number of argument
+* @av: array of arguments
+* Return: 0 on success, a different number otherwise
+*/
+int main(int ac, char **av)
+{
+	unsigned int i = 0;
+
+	if (ac < 2)
+	{
+		fprintf(stderr, ERR_USAGE);
+		exit(1);
+	}
+
+	for (i = 1; av[i]; i++)
+	{
+		printf("\n%s:\n", av[i]);
+		_hnm(av[0], av[i]);
+	}
+
 	return (0);
 }
