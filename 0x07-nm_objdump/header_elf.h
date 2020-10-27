@@ -120,5 +120,6 @@ int clean_symbol_64_32(elf_struct_headers *elf_headers);
 /*utils_elf_section_content_1.c*/
 unsigned char *get_section_content(elf_struct_headers *elf_headers, int fd,
 	int i);
+char *get_ftype(elf_struct_headers *elf_headers);
 
 #endif
