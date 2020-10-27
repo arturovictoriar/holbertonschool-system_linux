@@ -145,3 +145,28 @@ char get_chr_type_symbol2_64(elf_struct_headers *elf_headers, int i)
 		c = 'T';
 	return (c);
 }
+
+/**
+* clean_symbol_64_32 - Clean the list of sections and symbols
+* @elf_headers: Elf headers
+* Return: 0 on success, 1 otherwise
+*/
+int clean_symbol_64_32(elf_struct_headers *elf_headers)
+{
+	if (is_64(elf_headers->e_64))
+	{
+		free(elf_headers->es_64);
+		elf_headers->es_64 = NULL;
+		free(elf_headers->esy_64);
+		elf_headers->esy_64 = NULL;
+	}
+	else
+	{
+		free(elf_headers->es_32);
+		elf_headers->es_32 = NULL;
+		free(elf_headers->esy_32);
+		elf_headers->esy_32 = NULL;
+	}
+
+	return (0);
+}

@@ -96,15 +96,11 @@ int clean_section_64_32(elf_struct_headers *elf_headers)
 	{
 		free(elf_headers->es_64);
 		elf_headers->es_64 = NULL;
-		free(elf_headers->esy_64);
-		elf_headers->esy_64 = NULL;
 	}
 	else
 	{
 		free(elf_headers->es_32);
 		elf_headers->es_32 = NULL;
-		free(elf_headers->esy_32);
-		elf_headers->esy_32 = NULL;
 	}
 
 	return (0);

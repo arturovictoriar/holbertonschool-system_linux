@@ -36,7 +36,7 @@ int _hnm(char *prg, char *file_name)
 	handle_data_format(&elf_headers);
 	if (print_elf_symbol_header(&elf_headers, fd))
 		fprintf(stderr, "%s: %s: no symbols\n", prg, file_name);
-	clean_section_64_32(&elf_headers);
+	clean_symbol_64_32(&elf_headers);
 	close(fd);
 	return (0);
 }
