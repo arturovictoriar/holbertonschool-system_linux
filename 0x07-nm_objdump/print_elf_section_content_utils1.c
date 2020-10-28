@@ -27,6 +27,7 @@ int print_elf_section_content(elf_struct_headers *elf_headers, int fd)
 		if (!is_little_endian(elf_headers->e_64))
 			for (i = 0; i < elf_headers->e_64.e_shnum; i++)
 				convert_little_to_big_end_64_section(elf_headers, i);
+		print_elf_header_file_64(elf_headers, fd);
 		print_64_section_content(elf_headers, fd);
 	}
 	else
@@ -34,6 +35,7 @@ int print_elf_section_content(elf_struct_headers *elf_headers, int fd)
 		if (!is_little_endian(elf_headers->e_64))
 			for (i = 0; i < elf_headers->e_32.e_shnum; i++)
 				convert_little_to_big_end_32_section(elf_headers, i);
+		print_elf_header_file_32(elf_headers, fd);
 		print_32_section_content(elf_headers, fd);
 	}
 	return (0);

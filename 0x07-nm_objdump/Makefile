@@ -7,7 +7,7 @@ SRC5_1 = 0-nm.c utils_elf_1.c convert_endian_1.c convert_endian_2.c convert_endi
 SRC5_2 = print_elf_symbol_header_utils1.c utils_elf_symbol_1.c convert_endian_4.c
 SRC5 = $(SRC5_1) $(SRC5_2)
 SRC6_1 = 1-objdump.c utils_elf_1.c convert_endian_1.c convert_endian_2.c convert_endian_3.c utils_elf_section_1.c
-SRC6_2 = print_elf_section_content_utils1.c utils_elf_symbol_1.c convert_endian_4.c utils_elf_section_content_1.c
+SRC6_2 = print_elf_section_content_utils1.c utils_elf_symbol_1.c convert_endian_4.c utils_elf_section_content_1.c print_elf_header_file_1.c
 SRC6 = $(SRC6_1) $(SRC6_2)
 OBJ5 = $(addprefix $(OBJDIR), $(SRC5:%.c=%.o))
 OBJ6 = $(addprefix $(OBJDIR), $(SRC6:%.c=%.o))

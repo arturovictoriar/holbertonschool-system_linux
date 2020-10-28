@@ -19,6 +19,17 @@
 #include <errno.h>
 #include <elf.h>
 
+#define BFD_NO_FLAGS	0x00
+#define HAS_RELOC	0x01
+#define EXEC_P		0x02
+#define HAS_LINENO	0x04
+#define HAS_DEBUG	0x08
+#define HAS_SYMS	0x10
+#define HAS_LOCALS	0x20
+#define DYNAMIC		0x40
+#define WP_TEXT		0x80
+#define D_PAGED		0x100
+
 /**
  * struct elf_ESP_header - Elf header
  * @e_64: elf struct for 64 bits arquitecture
@@ -121,5 +132,9 @@ int clean_symbol_64_32(elf_struct_headers *elf_headers);
 unsigned char *get_section_content(elf_struct_headers *elf_headers, int fd,
 	int i);
 char *get_ftype(elf_struct_headers *elf_headers);
+
+/*print_elf_header_file_1.c*/
+int print_elf_header_file_64(elf_struct_headers *elf_headers, int fd);
+int print_elf_header_file_32(elf_struct_headers *elf_headers, int fd);
 
 #endif
