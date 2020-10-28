@@ -136,5 +136,7 @@ char *get_ftype(elf_struct_headers *elf_headers);
 /*print_elf_header_file_1.c*/
 int print_elf_header_file_64(elf_struct_headers *elf_headers, int fd);
 int print_elf_header_file_32(elf_struct_headers *elf_headers, int fd);
+int max_len_64(elf_struct_headers *elf_headers, unsigned int i);
+int max_len_32(elf_struct_headers *elf_headers, unsigned int i);
 
 #endif

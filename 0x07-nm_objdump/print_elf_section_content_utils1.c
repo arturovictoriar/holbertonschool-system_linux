@@ -88,9 +88,10 @@ int section_content_64(elf_struct_headers *elf_headers, unsigned int i,
 					   unsigned int j, unsigned char *content_s)
 {
 	unsigned int k = 0, l = 0;
+	int lenA = max_len_64(elf_headers, i);
 
 	if (j == 1)
-		printf(" %.4lx ", elf_headers->es_64[i].sh_addr);
+		printf(" %0*lx ", lenA, elf_headers->es_64[i].sh_addr);
 	printf("%.2x", content_s[j - 1]);
 	if (j % 4 == 0)
 		printf(" ");
@@ -119,7 +120,7 @@ int section_content_64(elf_struct_headers *elf_headers, unsigned int i,
 		printf("\n");
 	}
 	if (j % 16 == 0 && j != elf_headers->es_64[i].sh_size)
-		printf(" %.4lx ", elf_headers->es_64[i].sh_addr + j);
+		printf(" %0*lx ", lenA, elf_headers->es_64[i].sh_addr + j);
 	return (0);
 }
 
@@ -170,9 +171,10 @@ int section_content_32(elf_struct_headers *elf_headers, unsigned int i,
 					   unsigned int j, unsigned char *content_s)
 {
 	unsigned int k = 0, l = 0;
+	int lenA = max_len_32(elf_headers, i);
 
 	if (j == 1)
-		printf(" %.4lx ", (unsigned long)elf_headers->es_32[i].sh_addr);
+		printf(" %0*lx ", lenA, (unsigned long)elf_headers->es_32[i].sh_addr);
 	printf("%.2x", content_s[j - 1]);
 	if (j % 4 == 0)
 		printf(" ");
@@ -201,6 +203,6 @@ int section_content_32(elf_struct_headers *elf_headers, unsigned int i,
 		printf("\n");
 	}
 	if (j % 16 == 0 && j != elf_headers->es_32[i].sh_size)
-		printf(" %.4lx ", (unsigned long)elf_headers->es_32[i].sh_addr + j);
+		printf(" %0*lx ", lenA, (unsigned long)elf_headers->es_32[i].sh_addr + j);
 	return (0);
 }
