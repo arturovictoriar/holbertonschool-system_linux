@@ -81,7 +81,10 @@ int print_elf_header_file_64(elf_struct_headers *elf_headers, int fd)
 	if (verification_section_64(elf_headers, str_table, ".debug"))
 		flags |= HAS_DEBUG;
 
-	printf("architecture: i386:x86-64, flags 0x%08lx:\n", flags);
+	if (is_little_endian(elf_headers->e_64))
+		printf("architecture: i386:x86-64, flags 0x%08lx:\n", flags);
+	else
+		printf("architecture: UNKNOWN!, flags 0x%08lx:\n", flags);
 	print_file_flags(flags);
 	printf("start address 0x%16.16lx\n", elf_headers->e_64.e_entry);
 
@@ -138,7 +141,10 @@ int print_elf_header_file_32(elf_struct_headers *elf_headers, int fd)
 	if (verification_section_32(elf_headers, str_table, ".debug"))
 		flags |= HAS_DEBUG;
 
-	printf("architecture: i386, flags 0x%08lx:\n", flags);
+	if (is_little_endian(elf_headers->e_64))
+		printf("architecture: i386, flags 0x%08lx:\n", flags);
+	else
+		printf("architecture: UNKNOWN!, flags 0x%08lx:\n", flags);
 	print_file_flags(flags);
 	printf("start address 0x%8.8lx\n",
 		   (unsigned long)elf_headers->e_32.e_entry);
