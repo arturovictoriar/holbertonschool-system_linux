@@ -11,13 +11,13 @@ void print_python_bytes(PyObject *p)
 	char *s = NULL;
 
 	printf("[.] bytes object info\n");
-	if (!my_PyBytes_Check(p))
+	if (!my_Bytes_Check(p))
 	{
 		printf("  [ERROR] Invalid Bytes Object\n");
 		return;
 	}
-	size = my_PyBytes_GET_SIZE(p);
-	s = my_PyBytes_AS_STRING(p);
+	size = my_Bytes_GET_SIZE(p);
+	s = my_Bytes_AS_STRING(p);
 	printf("  size: %d\n", size);
 	printf("  trying string: %s\n", s);
 	max_size = (size < 10) ? size + 1 : 10;
@@ -40,14 +40,11 @@ void print_python_bytes(PyObject *p)
 void print_python_list(PyObject *p)
 {
 	(void)p;
-	int i = 0, size = my_Py_SIZE(p);
-	int allocated = my_Py_allocated(p);
+	int i = 0, size = my_SIZE(p);
+	int allocated = my_allocated(p);
 
-	if (!my_PyList_Check(p))
-	{
-		PyErr_BadInternalCall();
+	if (!my_List_Check(p))
 		return;
-	}
 
 	printf("[*] Python list info\n");
 	printf("[*] Size of the Python List = %d\n", size);
