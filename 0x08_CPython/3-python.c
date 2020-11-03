@@ -10,6 +10,7 @@ void print_python_float(PyObject *p)
 	int fla = Py_DTSF_ADD_DOT_0, typ = Py_DTST_INFINITE;
 	char *s = NULL;
 
+	fflush(stdout);
 	printf("[.] float object info\n");
 	if (!my_Float_Check(p))
 	{
@@ -32,6 +33,7 @@ void print_python_bytes(PyObject *p)
 	int size = 0, max_size = 0, i = 0;
 	char *s = NULL;
 
+	fflush(stdout);
 	printf("[.] bytes object info\n");
 	if (!my_Bytes_Check(p))
 	{
@@ -66,6 +68,7 @@ void print_python_list(PyObject *p)
 	int i = 0, size = my_SIZE(p);
 	int allocated = my_allocated(p);
 
+	fflush(stdout);
 	if (!my_List_Check(p))
 	{
 		printf("  [ERROR] Invalid List Object\n");
