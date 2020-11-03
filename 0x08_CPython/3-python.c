@@ -7,7 +7,7 @@
  */
 void print_python_float(PyObject *p)
 {
-	int fla = Py_DTSF_ADD_DOT_0, typ = Py_DTST_INFINITE;
+	int fla = Py_DTSF_ADD_DOT_0, *typ = NULL;
 	char *s = NULL;
 
 	fflush(stdout);
@@ -17,7 +17,7 @@ void print_python_float(PyObject *p)
 		printf("  [ERROR] Invalid Float Object\n");
 		return;
 	}
-	s = PyOS_double_to_string(my_Float_AS_DOUBLE(p), 'g', 16, fla, &typ);
+	s = PyOS_double_to_string(my_Float_AS_DOUBLE(p), 'g', 16, fla, typ);
 	if (s)
 		printf("  value: %s\n", s);
 	fflush(stdout);
