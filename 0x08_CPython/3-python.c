@@ -18,8 +18,7 @@ void print_python_float(PyObject *p)
 		return;
 	}
 	s = PyOS_double_to_string(my_Float_AS_DOUBLE(p), 'g', 16, fla, typ);
-	if (s)
-		printf("  value: %s\n", s);
+	printf("  value: %s\n", s);
 	fflush(stdout);
 }
 
