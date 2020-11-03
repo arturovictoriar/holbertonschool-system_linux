@@ -29,7 +29,7 @@ static inline int _my_IS_TYPE(const PyObject *ob, const PyTypeObject *type)
 }
 #define my_IS_TYPE(ob, type) _my_IS_TYPE(_PyObject_CAST_CONST(ob), type)
 #define my_Object_TypeCheck(ob, tp) \
-	(my_IS_TYPE(ob, tp) || PyType_IsSubtype(my_Py_TYPE(ob), (tp)))
+	(my_IS_TYPE(ob, tp) || PyType_IsSubtype(my_TYPE(ob), (tp)))
 #define my_Float_Check(op) my_Object_TypeCheck(op, &PyFloat_Type)
 #define my_Float_AS_DOUBLE(op) (((PyFloatObject *)(op))->ob_fval)
 #define _PyObject_CAST_CONST(op) ((const PyObject *)(op))
