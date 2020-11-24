@@ -10,9 +10,8 @@
 int main(int ac, char **av, char **en)
 {
 	pid_t child = 0;
-	int status = 0, flag = -1;
+	int status = 0;
 	struct user_regs_struct regs;
-	unsigned long name = 0;
 
 	if (ac < 2)
 	{
@@ -36,14 +35,10 @@ int main(int ac, char **av, char **en)
 		{
 			memset(&regs, 0, sizeof(regs));
 			ptrace(PTRACE_GETREGS, child, NULL, &regs);
-			if (WSTOPSIG(status) == SIGTRAP && flag == 1)
-				printf("%lu\n", name);
-			else if (WSTOPSIG(status) == SIGTRAP && (flag == -1 || flag == 0))
-				name = (unsigned long) regs.orig_rax;
+			if (WSTOPSIG(status) == SIGTRAP && (long) regs.rax == -38)
+				printf("%lu\n", (unsigned long) regs.orig_rax);
 			ptrace(PTRACE_SYSCALL, child, NULL, NULL);
-			flag = (flag == 0) ? 1 : 0;
 		}
-		printf("%lu\n", name);
 	}
 	return (0);
 }
