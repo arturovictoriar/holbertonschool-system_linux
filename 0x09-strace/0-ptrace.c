@@ -4,9 +4,10 @@
 * main - use ptrace for getting the syscall number
 * @ac: number of arguments
 * @av: list of arguments
+* @en: list of environ variables
 * Return: 0 on success
 */
-int main(int ac, char **av)
+int main(int ac, char **av, char **en)
 {
 	pid_t child = 0;
 	int status = 0, flag = -1;
@@ -23,7 +24,7 @@ int main(int ac, char **av)
 	{
 		ptrace(PTRACE_TRACEME, child, NULL, NULL);
 		raise(SIGSTOP);
-		execve(av[1], &(av[1]), NULL);
+		execve(av[1], &(av[1]), en);
 	}
 	else
 	{
