@@ -2,10 +2,10 @@
 
 
 /**
-* print_parameters - print the parametres of a given syscall
-* @regs: struct with the register syscall
-* Return: nothing
-*/
+ * print_parameters - print the parametres of a given syscall
+ * @regs: struct with the register syscall
+ * Return: nothing
+ */
 void print_parameters(struct user_regs_struct regs)
 {
 	unsigned long para[6] = {0};
@@ -14,7 +14,7 @@ void print_parameters(struct user_regs_struct regs)
 	para[0] = (unsigned long) regs.rdi;
 	para[1] = (unsigned long) regs.rsi;
 	para[2] = (unsigned long) regs.rdx;
-	para[3] = (unsigned long) regs.rcx;
+	para[3] = (unsigned long) regs.r10;
 	para[4] = (unsigned long) regs.r8;
 	para[5] = (unsigned long) regs.r9;
 
@@ -24,7 +24,10 @@ void print_parameters(struct user_regs_struct regs)
 	{
 		if (i > 0)
 			printf(", ");
-		printf("%#lx", para[i]);
+		if (syscalls_64_g[(unsigned long) regs.orig_rax].params[i] == VARARGS)
+			printf("...");
+		else if (syscalls_64_g[(unsigned long) regs.orig_rax].params[i] != VOID)
+			printf("%#lx", para[i]);
 		i++;
 	}
 }
