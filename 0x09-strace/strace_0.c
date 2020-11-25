@@ -53,7 +53,7 @@ int main(int ac, char **av, char **en)
 	else if (child == 0)
 	{
 		ptrace(PTRACE_TRACEME, child, NULL, NULL);
-		kill(getpid(), SIGSTOP);
+		raise(SIGSTOP);
 		execve(av[1], &(av[1]), en);
 	}
 	else
@@ -66,7 +66,7 @@ int main(int ac, char **av, char **en)
 				break;
 			memset(&regs, 0, sizeof(regs));
 			ptrace(PTRACE_GETREGS, child, 0, &regs);
-			printf("%lu\n", (long)regs.orig_rax);
+			printf("%ld\n", (long)regs.orig_rax);
 			if (wait_entry_quit_syscall(child, status))
 				break;
 		}
