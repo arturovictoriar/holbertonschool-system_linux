@@ -10,7 +10,7 @@
 int main(int ac, char **av, char **en)
 {
 	pid_t child = 0;
-	int status = 0;
+	int status = 0, flag = 0;
 	struct user_regs_struct regs;
 
 	if (ac < 2)
@@ -34,12 +34,18 @@ int main(int ac, char **av, char **en)
 		ptrace(PTRACE_SYSCALL, child, NULL, NULL);
 		while (wait(&status) && !WIFEXITED(status))
 		{
+			if (flag)
+				(printf("\n"), flag = 0);
 			memset(&regs, 0, sizeof(regs));
 			ptrace(PTRACE_GETREGS, child, NULL, &regs);
 			if (WSTOPSIG(status) == SIGTRAP && (long) regs.rax == -38)
-				printf("%s\n", (char *) syscalls_64_g[(unsigned long)regs.orig_rax].name);
+			{
+				flag = 1;
+				printf("%s", (char *) syscalls_64_g[(unsigned long)regs.orig_rax].name);
+			}
 			ptrace(PTRACE_SYSCALL, child, NULL, NULL);
 		}
+		printf("\n");
 	}
 	return (0);
 }
