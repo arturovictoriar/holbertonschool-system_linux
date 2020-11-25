@@ -37,7 +37,7 @@ int main(int ac, char **av, char **en)
 			memset(&regs, 0, sizeof(regs));
 			ptrace(PTRACE_GETREGS, child, NULL, &regs);
 			if (flag)
-				(printf(" = 0x%lx\n", (unsigned long) regs.rax), flag = 0);
+				(printf(" = %#lx\n", (unsigned long) regs.rax), flag = 0);
 			if (WSTOPSIG(status) == SIGTRAP && (long) regs.rax == -38)
 				(printf("%s",
 					(char *) syscalls_64_g[(unsigned long)regs.orig_rax].name), flag = 1);
