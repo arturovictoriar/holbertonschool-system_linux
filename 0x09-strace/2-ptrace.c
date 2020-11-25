@@ -43,7 +43,7 @@ int main(int ac, char **av, char **en)
 					(char *) syscalls_64_g[(unsigned long)regs.orig_rax].name), flag = 1);
 			ptrace(PTRACE_SYSCALL, child, NULL, NULL);
 		}
-		printf("\n");
+		printf(" = ?\n");
 	}
 	return (0);
 }
