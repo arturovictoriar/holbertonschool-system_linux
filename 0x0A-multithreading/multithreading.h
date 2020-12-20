@@ -10,7 +10,7 @@
 #include <stdarg.h>
 #include <sys/sysinfo.h>
 
-#define NUM_THREADS 4
+#define NUM_THREADS get_nprocs()
 
 /**
  * struct pixel_s - RGB pixel
