@@ -9,6 +9,7 @@
 #include <pthread.h>
 #include <stdarg.h>
 #include <sys/sysinfo.h>
+#include "list.h"
 
 #define NUM_THREADS get_nprocs()
 
@@ -78,5 +79,7 @@ void *thread_entry(void *arg);
 int tprintf(char const *format, ...);
 void blur_portion(blur_portion_t const *portion);
 void blur_image(img_t *img_blur, img_t const *img, kernel_t const *kernel);
+int tprintf(char const *format, ...);
+list_t *prime_factors(char const *s);
 
 #endif
