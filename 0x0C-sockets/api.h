@@ -11,5 +11,11 @@
 
 #define PORT 8080
 #define NUM_CLNTS 10
+#define BUFFER_SIZE 8192
+#define CRLF "\xD\xA"
+
+int parse_req(char *req);
+void client_res(int socket_client, int status);
+void err_socket(char *msg);
 
 #endif
