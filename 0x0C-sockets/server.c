@@ -43,9 +43,9 @@ void client_req(int socket_server)
 		{
 			req[req_size] = '\0';
 			printf("Raw request: \"%s\"\n", req);
+			status = parse_req(req);
+			client_res(socket_client, status);
 		}
-		status = parse_req(req);
-		client_res(socket_client, status);
 		close(socket_client);
 	}
 }
@@ -60,6 +60,7 @@ int main(void)
 	int socket_server = 0, server_size = 0;
 	struct sockaddr_in addr_server;
 
+	setbuf(stdout, NULL);
 	/*Create the file descriptor for a socket server*/
 	socket_server = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (socket_server == -1)
