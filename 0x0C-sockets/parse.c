@@ -101,3 +101,34 @@ void parse_title_description(char **t, char **d, http_msg_t *req_data)
 	*t = title;
 	*d = description;
 }
+
+/**
+ * parse_query_id - Look for an id in the query
+ * @i: id store
+ * @req_data: http message
+ * Return: nothing
+ */
+void parse_query_id(char **i, http_msg_t *req_data)
+{
+	char *pair = NULL, *save_query = NULL, *key = NULL, *value = NULL;
+	char *id = NULL;
+
+	save_query = req_data->query;
+	if (!save_query)
+		return;
+	pair = strtok_r(req_data->query, "&", &save_query);
+	while (pair)
+	{
+		/*Split the key and value*/
+		key = strtok(pair, "=");
+		value = strtok(NULL, "=");
+		if (!strcmp(key, "id"))
+		{
+			id = value;
+			break;
+		}
+		pair = strtok_r(NULL, "&", &save_query);
+	}
+
+	*i = id;
+}

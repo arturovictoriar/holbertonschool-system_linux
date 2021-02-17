@@ -16,6 +16,11 @@
 #define SP "\x20\x9"
 
 #define JSON_FORMAT "{\"id\":%lu,\"title\":\"%s\",\"description\":\"%s\"}"
+#define RES_200_FORMAT  "HTTP/1.1 200 OK" CRLF \
+			"Content-Length: %d" CRLF \
+			"Content-Type: application/json" CRLF \
+			CRLF \
+			"%s"
 #define RES_201_FORMAT "HTTP/1.1 201 Created" CRLF \
 			"Content-Length: %d" CRLF \
 			"Content-Type: application/json" CRLF \
@@ -126,5 +131,6 @@ todo_t *save_new_todo(char *title, char *description, http_msg_t *req_data);
 http_msg_t parse_req(char *req);
 void parse_title_description(char **t, char **d, http_msg_t *req_data);
 void parse_content_length(char **cl, http_msg_t *req_data);
+void parse_query_id(char **i, http_msg_t *req_data);
 
 #endif
