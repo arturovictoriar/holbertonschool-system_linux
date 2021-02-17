@@ -17,6 +17,8 @@ OBJ3 = $(addprefix $(OBJDIR), $(SRC3:%.c=%.o))
 CRUD_SERVER = crud_server_req.c crud_server_res.c parse.c todo.c
 SRC4 = post_method.c check_req_1.c $(CRUD_SERVER)
 OBJ4 = $(addprefix $(OBJDIR), $(SRC4:%.c=%.o))
+SRC5 = post_method.c get_method.c check_req_2.c $(CRUD_SERVER)
+OBJ5 = $(addprefix $(OBJDIR), $(SRC5:%.c=%.o))
 
 all : todo_api_0
 
@@ -34,6 +36,9 @@ todo_api_3: $(OBJDIR) $(OBJ3)
 
 todo_api_4: $(OBJDIR) $(OBJ4)
 	$(CC) $(CFLAGS) -o $@ $(OBJ4)
+
+todo_api_5: $(OBJDIR) $(OBJ5)
+	$(CC) $(CFLAGS) -o $@ $(OBJ5)
 
 $(OBJDIR)%.o: %.c api.h crud.h
 	$(CC) $(CFLAGS) -c $< -o $@

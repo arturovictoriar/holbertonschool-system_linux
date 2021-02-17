@@ -7,7 +7,7 @@
  */
 int check_req(http_msg_t *req_data)
 {
-	char *c_methods[] = {"POST", NULL}, *c_paths[] = {"/todos", NULL};
+	char *c_methods[] = {"POST", "GET", NULL}, *c_paths[] = {"/todos", NULL};
 	char *method = NULL, *path = NULL;
 	int m = 0, p = 0;
 
@@ -37,6 +37,9 @@ int check_req(http_msg_t *req_data)
 			case POST:
 				req_data->status = post_method(req_data);
 				break;
+			case GET:
+				req_data->status = get_method(req_data);
+				break;
 		}
 		return (req_data->status);
 	}
@@ -55,6 +58,9 @@ void create_res(int status, http_msg_t *req_data, char *res)
 	int method = 0;
 
 	method = post_res(status, req_data, res);
+	if (method)
+		return;
+	method = get_res(status, req_data, res);
 	if (method)
 		return;
 }

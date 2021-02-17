@@ -18,22 +18,6 @@ void print_http_msg(http_msg_t *req_data)
 }
 
 /**
- * create_res - create the response
- * @status: response status
- * @req_data: http message
- * @res: response store
- * Return: nothing
- */
-void create_res(int status, http_msg_t *req_data, char *res)
-{
-	int method = 0;
-
-	method = post_res(status, req_data, res);
-	if (method)
-		return;
-}
-
-/**
  * client_res - handle the client response
  * @socket_client: client file descritor
  * @req_data: request data parsed

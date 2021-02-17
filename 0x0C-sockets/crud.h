@@ -28,6 +28,7 @@
 #define RES_422_FORMAT "HTTP/1.1 422 Unprocessable Entity" CRLF \
 			CRLF
 
+#define OK 200
 #define CREATED 201
 #define NOT_FOUND 404
 #define LENGTH_REQUIRED 411
@@ -36,12 +37,14 @@
 /**
  * enum Meths - All methods availables
  * @POST: post method id
+ * @GET: get method id
  *
  * Description: Structure for storing the methods id
  */
 typedef enum Meths
 {
-	POST
+	POST,
+	GET
 } Meth;
 
 /**
@@ -110,7 +113,11 @@ void client_res(int socket_client, http_msg_t *req_data);
 int post_method(http_msg_t *req_data);
 int post_res(int status, http_msg_t *req_data, char *res);
 
+int get_method(http_msg_t *req_data);
+int get_res(int status, http_msg_t *req_data, char *res);
+
 int check_req(http_msg_t *req_data);
+void create_res(int status, http_msg_t *req_data, char *res);
 
 todo_db_t *create_todo_db(void);
 todo_t *create_todo(void);
