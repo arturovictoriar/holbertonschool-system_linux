@@ -18,6 +18,22 @@ void print_http_msg(http_msg_t *req_data)
 }
 
 /**
+ * create_res - create the response
+ * @status: response status
+ * @req_data: http message
+ * @res: response store
+ * Return: nothing
+ */
+void create_res(int status, http_msg_t *req_data, char *res)
+{
+	int method = 0;
+
+	method = post_res(status, req_data, res);
+	if (method)
+		return;
+}
+
+/**
  * client_res - handle the client response
  * @socket_client: client file descritor
  * @req_data: request data parsed
@@ -25,39 +41,13 @@ void print_http_msg(http_msg_t *req_data)
  */
 void client_res(int socket_client, http_msg_t *req_data)
 {
-	int res_size = 0, cont_len = 0, status;
+	int res_size = 0, status = 0;
 	char res[BUFFER_SIZE] = {0};
 
 	/*print_http_msg(req_data);*/
 	/*Check if the current request is a valid request*/
 	status = check_req(req_data);
-	switch (status)
-	{
-		case CREATED:
-			printf("%s %s %s -> 201 Created\n",
-					req_data->client, req_data->method, req_data->path);
-			cont_len = sprintf(res, JSON_FORMAT, req_data->last_todo->id,
-					req_data->last_todo->title, req_data->last_todo->description);
-			res_size = sprintf(res, RES_201_FORMAT, cont_len, req_data->last_todo->id,
-					req_data->last_todo->title, req_data->last_todo->description);
-			res[res_size] = '\0';
-			break;
-		case NOT_FOUND:
-			printf("%s %s %s -> 404 Not Found\n",
-					req_data->client, req_data->method, req_data->path);
-			sprintf(res, RES_404_FORMAT);
-			break;
-		case LENGTH_REQUIRED:
-			printf("%s %s %s -> 411 Length Required\n",
-					req_data->client, req_data->method, req_data->path);
-			sprintf(res, RES_411_FORMAT);
-			break;
-		case UNPRO_ENTITY:
-			printf("%s %s %s -> 422 Unprocessable Entity\n",
-					req_data->client, req_data->method, req_data->path);
-			sprintf(res, RES_422_FORMAT);
-			break;
-	}
+	create_res(status, req_data, res);
 	/*Send a response to the client*/
 	res_size = strlen(res);
 	if (send(socket_client, res, res_size, 0) != res_size)

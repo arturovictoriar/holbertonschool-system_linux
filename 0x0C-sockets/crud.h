@@ -108,6 +108,8 @@ void err_socket(char *msg);
 void client_res(int socket_client, http_msg_t *req_data);
 
 int post_method(http_msg_t *req_data);
+int post_res(int status, http_msg_t *req_data, char *res);
+
 int check_req(http_msg_t *req_data);
 
 todo_db_t *create_todo_db(void);
