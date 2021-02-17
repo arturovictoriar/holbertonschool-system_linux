@@ -75,3 +75,20 @@ todo_t *save_new_todo(char *title, char *description, http_msg_t *req_data)
 
 	return (new_todo);
 }
+
+/**
+* free_todo - free a todo
+* @todo: todo to free
+* Return: nothing
+*/
+void free_todo(todo_t *todo)
+{
+	if (todo)
+	{
+		if (todo->title)
+			free(todo->title);
+		if (todo->description)
+			free(todo->description);
+		free(todo);
+	}
+}

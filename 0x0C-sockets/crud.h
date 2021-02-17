@@ -16,7 +16,7 @@
 #define SP "\x20\x9"
 
 #define JSON_FORMAT "{\"id\":%lu,\"title\":\"%s\",\"description\":\"%s\"}"
-#define RES_200_FORMAT  "HTTP/1.1 200 OK" CRLF \
+#define RES_200_FORMAT "HTTP/1.1 200 OK" CRLF \
 			"Content-Length: %d" CRLF \
 			"Content-Type: application/json" CRLF \
 			CRLF \
@@ -26,6 +26,8 @@
 			"Content-Type: application/json" CRLF \
 			CRLF \
 			JSON_FORMAT
+#define RES_204_FORMAT "HTTP/1.1 204 No Content" CRLF \
+			CRLF
 #define RES_404_FORMAT "HTTP/1.1 404 Not Found" CRLF \
 			CRLF
 #define RES_411_FORMAT "HTTP/1.1 411 Length Required" CRLF \
@@ -35,6 +37,7 @@
 
 #define OK 200
 #define CREATED 201
+#define NO_CONTENT 204
 #define NOT_FOUND 404
 #define LENGTH_REQUIRED 411
 #define UNPRO_ENTITY 422
@@ -43,13 +46,15 @@
  * enum Meths - All methods availables
  * @POST: post method id
  * @GET: get method id
+ * @DELETE: delete method id
  *
  * Description: Structure for storing the methods id
  */
 typedef enum Meths
 {
 	POST,
-	GET
+	GET,
+	DELETE
 } Meth;
 
 /**
@@ -127,10 +132,14 @@ void create_res(int status, http_msg_t *req_data, char *res);
 todo_db_t *create_todo_db(void);
 todo_t *create_todo(void);
 todo_t *save_new_todo(char *title, char *description, http_msg_t *req_data);
+void free_todo(todo_t *todo);
 
 http_msg_t parse_req(char *req);
 void parse_title_description(char **t, char **d, http_msg_t *req_data);
 void parse_content_length(char **cl, http_msg_t *req_data);
 void parse_query_id(char **i, http_msg_t *req_data);
+
+int delete_res(int status, http_msg_t *req_data, char *res);
+int delete_method(http_msg_t *req_data);
 
 #endif

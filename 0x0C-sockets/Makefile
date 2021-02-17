@@ -21,6 +21,8 @@ SRC5 = post_method.c get_method.c check_req_2.c $(CRUD_SERVER)
 OBJ5 = $(addprefix $(OBJDIR), $(SRC5:%.c=%.o))
 SRC6 = post_method.c get_method.c check_req_2.c $(CRUD_SERVER)
 OBJ6 = $(addprefix $(OBJDIR), $(SRC6:%.c=%.o))
+SRC7 = post_method.c get_method.c delete_method.c check_req_3.c $(CRUD_SERVER)
+OBJ7 = $(addprefix $(OBJDIR), $(SRC7:%.c=%.o))
 
 all : todo_api_0
 
@@ -44,6 +46,9 @@ todo_api_5: $(OBJDIR) $(OBJ5)
 
 todo_api_6: $(OBJDIR) $(OBJ6)
 	$(CC) $(CFLAGS) -o $@ $(OBJ6)
+
+todo_api_7: $(OBJDIR) $(OBJ7)
+	$(CC) $(CFLAGS) -o $@ $(OBJ7)
 
 $(OBJDIR)%.o: %.c api.h crud.h
 	$(CC) $(CFLAGS) -c $< -o $@
